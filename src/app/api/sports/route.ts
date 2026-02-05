@@ -1,24 +1,8 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { getDatabase } from '@/lib/sqlite/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-const USE_LOCAL_SQLITE = process.env.NEXT_PUBLIC_USE_LOCAL_SQLITE === 'true';
-
 export async function GET() {
-  if (USE_LOCAL_SQLITE) {
-    try {
-      const database = await getDatabase();
-      if (!database) throw new Error('Database not available');
-
-      const stmt = database.prepare('SELECT * FROM sports ORDER BY name');
-      const sports = stmt.all();
-
-      return NextResponse.json(sports);
-    } catch (error: any) {
-      console.error('Get sports error:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-  } else {
+  try {
     const supabase = await createServerSupabaseClient();
 
     const { data, error } = await supabase
@@ -31,6 +15,9 @@ export async function GET() {
     }
 
     return NextResponse.json(data);
+  } catch (error: any) {
+    console.error('Get sports error:', error);
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }
 
