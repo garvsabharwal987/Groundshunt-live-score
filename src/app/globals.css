@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+  }
+
+  .dark {
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100;
+  }
+  
+  .card-hover {
+    @apply card hover:shadow-md hover:border-gray-200 transition-all duration-200;
+  }
+
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  .btn-ghost {
+    @apply btn text-gray-600 hover:bg-gray-100 focus:ring-gray-400;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-md {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  /* Input styles */
+  .input {
+    @apply w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 placeholder-gray-400 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
+  }
+
+  .input-error {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500/20;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-live {
+    @apply badge bg-red-100 text-red-700;
+  }
+
+  .badge-upcoming {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+
+  .badge-completed {
+    @apply badge bg-gray-100 text-gray-700;
+  }
+
+  /* Score display */
+  .score-display {
+    @apply font-mono text-2xl font-bold tabular-nums;
+  }
+
+  .score-display-lg {
+    @apply font-mono text-4xl font-bold tabular-nums;
+  }
+
+  /* Live indicator */
+  .live-indicator {
+    @apply relative flex items-center gap-1.5;
+  }
+
+  .live-indicator::before {
+    content: '';
+    @apply h-2 w-2 rounded-full bg-red-500 animate-pulse;
+  }
+
+  /* Table styles */
+  .table-container {
+    @apply overflow-x-auto rounded-lg border border-gray-200;
+  }
+
+  .table {
+    @apply w-full text-sm;
+  }
+
+  .table th {
+    @apply bg-gray-50 px-4 py-3 text-left font-semibold text-gray-700;
+  }
+
+  .table td {
+    @apply border-t border-gray-100 px-4 py-3;
+  }
+
+  .table tbody tr:hover {
+    @apply bg-gray-50;
+  }
+
+  /* Sport-specific background patterns */
+  .sport-gradient-tabletennis {
+    @apply bg-gradient-to-br from-amber-500/10 to-amber-600/5;
+  }
+
+  .sport-gradient-football {
+    @apply bg-gradient-to-br from-blue-500/10 to-blue-600/5;
+  }
+
+  .sport-gradient-basketball {
+    @apply bg-gradient-to-br from-orange-500/10 to-orange-600/5;
+  }
+
+  .sport-gradient-badminton {
+    @apply bg-gradient-to-br from-purple-500/10 to-purple-600/5;
+  }
+
+  .sport-gradient-volleyball {
+    @apply bg-gradient-to-br from-red-500/10 to-red-600/5;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Navigation active state */
+  .nav-link {
+    @apply flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors;
+  }
+
+  .nav-link-active {
+    @apply nav-link bg-primary-50 text-primary-700 font-medium;
+  }
+}
+
+@layer utilities {
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth scroll */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.live-pulse-ring {
+  position: relative;
+}
+
+.live-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgb(239 68 68 / 0.4);
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
