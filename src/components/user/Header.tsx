@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   Home, 
@@ -32,11 +33,15 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-              <Trophy className="h-5 w-5 text-black" />
-            </div>
+            <Image 
+              src="/logo.svg" 
+              alt="Groundshunt Arena" 
+              width={40} 
+              height={40} 
+              className="h-10 w-auto"
+            />
             <div className="hidden sm:block">
-              <span className="font-bold text-white">SPORTIKON</span>
+              <span className="font-bold text-white">Groundshunt</span>
               <span className="font-light text-orange-400 ml-1">Arena</span>
             </div>
           </Link>

@@ -27,7 +27,16 @@ export default function NewsPage() {
     try {
       const res = await fetch('/api/news?all=true');
       const data = await res.json();
-      if (Array.isArray(data)) setNews(data);
+      if (Array.isArray(data)) {
+        // Normalize the data: map is_featured to is_published for display
+        const normalizedData = data.map((item: NewsOfTheDay) => ({
+          ...item,
+          is_published: (item as any).is_featured !== undefined ? (item as any).is_featured : item.is_published,
+          featured_image_url: (item as any).image_url || item.featured_image_url,
+          publish_date: (item as any).published_at || item.publish_date,
+        }));
+        setNews(normalizedData);
+      }
     } catch (error) {
       console.error('Error fetching news:', error);
     }
@@ -69,12 +78,23 @@ export default function NewsPage() {
 
   const handleToggleActive = async (item: NewsOfTheDay) => {
     try {
-      await fetch(`/api/news/${item.id}`, {
+      // Determine the new state
+      const currentState = (item as any).is_featured !== undefined ? (item as any).is_featured : item.is_published;
+      const newState = !currentState;
+      
+      const response = await fetch(`/api/news/${item.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ is_published: !item.is_published }),
+        body: JSON.stringify({ 
+          is_featured: newState,
+          is_published: newState,
+        }),
       });
-      fetchData();
+      if (response.ok) {
+        fetchData();
+      } else {
+        console.error('Error toggling news:', await response.text());
+      }
     } catch (error) {
       console.error('Error toggling news:', error);
     }
@@ -90,23 +110,33 @@ export default function NewsPage() {
     };
 
     try {
+      let response;
       if (selectedNews) {
-        await fetch(`/api/news/${selectedNews.id}`, {
+        response = await fetch(`/api/news/${selectedNews.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
       } else {
-        await fetch('/api/news', {
+        response = await fetch('/api/news', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
       }
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error saving news:', errorData);
+        alert(`Error: ${errorData.error || 'Failed to save news'}`);
+        return;
+      }
+      
       setIsFormOpen(false);
       fetchData();
     } catch (error) {
       console.error('Error saving news:', error);
+      alert('Error saving news. Please check the console.');
     }
   };
 

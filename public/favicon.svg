@@ -1,0 +1,15 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#0a1628"/>
+  
+  <!-- Main geometric shape - outer L -->
+  <rect x="40" y="30" width="120" height="25" fill="#5dd9d6"/>
+  <rect x="40" y="30" width="25" height="95" fill="#5dd9d6"/>
+  
+  <!-- Inner cutout -->
+  <rect x="70" y="60" width="40" height="30" fill="#0a1628"/>
+  
+  <!-- Right section -->
+  <rect x="105" y="85" width="75" height="65" fill="#5dd9d6"/>
+  <rect x="120" y="105" width="30" height="25" fill="#0a1628"/>
+</svg>

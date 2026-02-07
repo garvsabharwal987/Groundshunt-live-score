@@ -1,5 +1,5 @@
 // App-wide constants
-export const APP_NAME = 'SPORTIKON Arena';
+export const APP_NAME = 'Groundshunt Arena';
 export const APP_DESCRIPTION = 'Multi-sport live scoring and tournament tracking platform';
 
 // Admin secret path (should match env variable)

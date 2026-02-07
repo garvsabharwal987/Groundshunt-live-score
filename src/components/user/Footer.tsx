@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Trophy } from 'lucide-react';
 
@@ -11,11 +12,15 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
-                <Trophy className="h-5 w-5 text-black" />
-              </div>
+              <Image 
+                src="/logo.svg" 
+                alt="Groundshunt Arena" 
+                width={32} 
+                height={32} 
+                className="h-8 w-auto"
+              />
               <div>
-                <span className="font-bold text-white">SPORTIKON</span>
+                <span className="font-bold text-white">Groundshunt</span>
                 <span className="font-light text-orange-400 ml-1">Arena</span>
               </div>
             </Link>
@@ -92,7 +97,7 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-gray-800">
           <p className="text-sm text-gray-400 text-center">
-            © {currentYear} SPORTIKON Arena. All rights reserved.
+            © {currentYear} Groundshunt Arena. All rights reserved.
           </p>
         </div>
       </div>

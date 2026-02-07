@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import { Card, Input, Select, Badge } from '@/components/ui';
 import { FileText, Search, Filter, User, Clock, Activity } from 'lucide-react';
-import { formatDate, formatRelativeTime, cn } from '@/lib/utils';
+import { formatDate, getRelativeTime, cn } from '@/lib/utils';
 import type { AuditLog } from '@/lib/database.types';
 
 type AuditLogWithUser = AuditLog & { 
@@ -207,7 +207,7 @@ export default function AuditLogsPage() {
                     )}
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {formatRelativeTime(log.created_at)}
+                      {getRelativeTime(log.created_at)}
                     </span>
                   </div>
 

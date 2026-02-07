@@ -109,86 +109,94 @@ function createQueryBuilder(db: ReturnType<typeof getDatabase>, table: string) {
       limitCount = 1;
       return builder;
     },
-    then: async (resolve: (result: { data: unknown; error: unknown }) => void) => {
-      try {
-        let result: unknown;
+    then: (onfulfilled?: (value: any) => any, onrejected?: (reason: any) => any) => {
+      return new Promise<{ data: unknown; error: unknown }>((resolve, reject) => {
+        try {
+          let result: unknown;
 
-        // Helper to convert values for SQLite
-        const convertValue = (v: unknown): unknown => {
-          if (typeof v === 'boolean') return v ? 1 : 0;
-          if (typeof v === 'object' && v !== null) return JSON.stringify(v);
-          return v;
-        };
+          // Helper to convert values for SQLite
+          const convertValue = (v: unknown): unknown => {
+            if (typeof v === 'boolean') return v ? 1 : 0;
+            if (typeof v === 'object' && v !== null) return JSON.stringify(v);
+            return v;
+          };
 
-        if (isInsert && insertData) {
-          // For news_of_the_day, ensure required fields are present
-          if (table === 'news_of_the_day') {
-            if (!('publish_date' in insertData)) {
-              insertData.publish_date = new Date().toISOString().slice(0, 10);
+          if (isInsert && insertData) {
+            // For news_of_the_day, ensure required fields are present
+            if (table === 'news_of_the_day') {
+              if (!('publish_date' in insertData)) {
+                insertData.publish_date = new Date().toISOString().slice(0, 10);
+              }
+              if (!('is_published' in insertData)) {
+                insertData.is_published = 1;
+              }
             }
-            if (!('is_published' in insertData)) {
-              insertData.is_published = 1;
+            let columns = Object.keys(insertData);
+            let values = Object.values(insertData);
+            // Handle JSON fields and booleans
+            const processedValues = values.map(convertValue);
+            const id = insertData.id || `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+            if (!insertData.id) {
+              columns = ['id', ...columns];
+              processedValues.unshift(id);
             }
-          }
-          let columns = Object.keys(insertData);
-          let values = Object.values(insertData);
-          // Handle JSON fields and booleans
-          const processedValues = values.map(convertValue);
-          const id = insertData.id || `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-          if (!insertData.id) {
-            columns = ['id', ...columns];
-            processedValues.unshift(id);
-          }
-          const placeholders = columns.map(() => '?').join(', ');
-          const sql = `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders})`;
-          console.log('SQLite INSERT:', sql);
-          console.log('Values:', processedValues);
-          db.prepare(sql).run(...processedValues);
-          // Return the inserted row
-          result = db.prepare(`SELECT * FROM ${table} WHERE id = ?`).get(id);
-          result = processRow(result as Record<string, unknown>, table);
-
-        } else if (isUpdate && updateData) {
-          const sets = Object.keys(updateData).map(k => `${k} = ?`);
-          const values = Object.values(updateData).map(convertValue);
-
-          const whereClause = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
-          const sql = `UPDATE ${table} SET ${sets.join(', ')}${whereClause}`;
-          db.prepare(sql).run(...values, ...params);
-
-          // Return updated rows
-          if (shouldReturnSingle && conditions.length) {
-            const selectSql = `SELECT * FROM ${table}${whereClause}`;
-            result = db.prepare(selectSql).get(...params);
+            const placeholders = columns.map(() => '?').join(', ');
+            const sql = `INSERT INTO ${table} (${columns.join(', ')}) VALUES (${placeholders})`;
+            console.log('SQLite INSERT:', sql);
+            console.log('Values:', processedValues);
+            db.prepare(sql).run(...processedValues);
+            // Return the inserted row
+            result = db.prepare(`SELECT * FROM ${table} WHERE id = ?`).get(id);
             result = processRow(result as Record<string, unknown>, table);
+
+          } else if (isUpdate && updateData) {
+            const sets = Object.keys(updateData).map(k => `${k} = ?`);
+            const values = Object.values(updateData).map(convertValue);
+
+            const whereClause = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
+            const sql = `UPDATE ${table} SET ${sets.join(', ')}${whereClause}`;
+            db.prepare(sql).run(...values, ...params);
+
+            // Return updated rows
+            if (shouldReturnSingle && conditions.length) {
+              const selectSql = `SELECT * FROM ${table}${whereClause}`;
+              result = db.prepare(selectSql).get(...params);
+              result = processRow(result as Record<string, unknown>, table);
+            }
+
+          } else if (isDelete) {
+            const whereClause = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
+            db.prepare(`DELETE FROM ${table}${whereClause}`).run(...params);
+            result = null;
+
+          } else {
+            // SELECT query with JOINs for related data
+            let sql = buildSelectQuery(table, selectColumns, conditions, orderBy, limitCount, params);
+
+            const rows = shouldReturnSingle
+              ? [db.prepare(sql).get(...params)]
+              : db.prepare(sql).all(...params);
+
+            result = (rows as Record<string, unknown>[])
+              .filter(Boolean)
+              .map(row => processRow(row, table));
+
+            if (shouldReturnSingle) {
+              result = (result as unknown[])[0] || null;
+            }
           }
 
-        } else if (isDelete) {
-          const whereClause = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
-          db.prepare(`DELETE FROM ${table}${whereClause}`).run(...params);
-          result = null;
-
-        } else {
-          // SELECT query with JOINs for related data
-          let sql = buildSelectQuery(table, selectColumns, conditions, orderBy, limitCount, params);
-
-          const rows = shouldReturnSingle
-            ? [db.prepare(sql).get(...params)]
-            : db.prepare(sql).all(...params);
-
-          result = (rows as Record<string, unknown>[])
-            .filter(Boolean)
-            .map(row => processRow(row, table));
-
-          if (shouldReturnSingle) {
-            result = (result as unknown[])[0] || null;
-          }
+          resolve({ data: result, error: null });
+        } catch (error) {
+          reject(error);
         }
-
-        resolve({ data: result, error: null });
-      } catch (error) {
-        resolve({ data: null, error });
-      }
+      }).then(onfulfilled, onrejected);
+    },
+    catch: (onrejected?: (reason: any) => any) => {
+      return (builder.then as any)(undefined, onrejected);
+    },
+    finally: (onfinally?: () => void) => {
+      return (builder.then as any)().finally(onfinally);
     },
   };
 

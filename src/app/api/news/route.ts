@@ -11,24 +11,26 @@ export async function GET(request: NextRequest) {
     let query = supabase
       .from('news_of_the_day')
       .select('*')
-      .order('publish_date', { ascending: false })
-      .order('created_at', { ascending: false });
+      .order('published_at', { ascending: false });
 
-    // For admin, show all news; for users, only published ones
+    // For admin, show all news; for users, only featured ones
     if (!showAll) {
-      query = query.eq('is_published', true).limit(20);
+      query = query.eq('is_featured', true).limit(20);
     }
 
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error('News API error:', error);
+      const errorMsg = typeof error === 'object' && error !== null ? (error as any).message || JSON.stringify(error) : String(error);
+      return NextResponse.json({ error: errorMsg }, { status: 500 });
     }
 
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Get news error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    console.error('Error details:', error?.message, error?.stack);
+    return NextResponse.json({ error: error?.message || 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -37,25 +39,46 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerSupabaseClient();
     const body = await request.json();
 
+    // Map old column names to new Supabase schema names
+    const insertData: Record<string, any> = {
+      title: body.title,
+    };
+    
+    // Map description (new schema) or content (old)
+    if ('description' in body) insertData.description = body.description;
+    else if ('content' in body) insertData.description = body.content; // fallback
+    
+    // Also include content if provided
+    if ('content' in body) insertData.content = body.content;
+    
+    // Map image_url - handle both old (featured_image_url) and new names
+    if ('featured_image_url' in body) insertData.image_url = body.featured_image_url;
+    else if ('image_url' in body) insertData.image_url = body.image_url;
+    
+    // Map is_featured - handle both old (is_published) and new names
+    if ('is_published' in body) insertData.is_featured = body.is_published;
+    else if ('is_featured' in body) insertData.is_featured = body.is_featured;
+    else insertData.is_featured = false;
+    
+    // Optional fields
+    if ('sport_id' in body) insertData.sport_id = body.sport_id;
+
     const { data, error } = await supabase
       .from('news_of_the_day')
-      .insert({
-        title: body.title,
-        content: body.content,
-        featured_image_url: body.featured_image_url,
-        is_published: body.is_published ?? true,
-        publish_date: body.publish_date || new Date().toISOString(),
-      })
+      .insert(insertData)
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error('News POST error:', error);
+      const errorMsg = typeof error === 'object' && error !== null ? (error as any).message || JSON.stringify(error) : String(error);
+      return NextResponse.json({ error: errorMsg }, { status: 500 });
     }
 
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Post news error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    console.error('Error details:', error?.message, error?.stack);
+    return NextResponse.json({ error: error?.message || 'Internal server error' }, { status: 500 });
   }
 }

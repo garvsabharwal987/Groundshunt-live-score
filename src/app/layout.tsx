@@ -13,14 +13,14 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'SPORTIKON Arena | Live Scores & Tournament Tracking',
-    template: '%s | SPORTIKON Arena',
+    default: 'Groundshunt Arena | Live Scores & Tournament Tracking',
+    template: '%s | Groundshunt Arena',
   },
-  description: 'GROUNDSHUNT x SPORTIKON 4.0 - Multi-sport live scoring and tournament tracking platform for Table Tennis, Football, Basketball, Badminton, and Volleyball.',
-  keywords: ['sports', 'live scores', 'table tennis', 'football', 'basketball', 'badminton', 'volleyball', 'tournament', 'sportikon'],
-  authors: [{ name: 'SPORTIKON Arena Team' }],
+  description: 'Groundshunt Arena - Multi-sport live scoring and tournament tracking platform for Table Tennis, Football, Basketball, Badminton, and Volleyball.',
+  keywords: ['sports', 'live scores', 'table tennis', 'football', 'basketball', 'badminton', 'volleyball', 'tournament', 'groundshunt'],
+  authors: [{ name: 'Groundshunt Arena Team' }],
   openGraph: {
-    title: 'SPORTIKON Arena',
+    title: 'Groundshunt Arena',
     description: 'Multi-sport live scoring and tournament tracking platform',
     type: 'website',
     locale: 'en_IN',

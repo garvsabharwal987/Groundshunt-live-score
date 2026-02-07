@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
@@ -60,11 +61,15 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       <div className="flex items-center justify-between h-16 px-4 border-b border-gray-800">
         {!collapsed && (
           <Link href={basePath} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <Trophy className="h-5 w-5 text-white" />
-            </div>
+            <Image 
+              src="/logo.svg" 
+              alt="Groundshunt Arena" 
+              width={32} 
+              height={32} 
+              className="h-8 w-auto"
+            />
             <div>
-              <span className="font-bold text-sm">SPORTIKON</span>
+              <span className="font-bold text-sm">Groundshunt</span>
               <span className="text-xs text-gray-400 block">Admin Panel</span>
             </div>
           </Link>

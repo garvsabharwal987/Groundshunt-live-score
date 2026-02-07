@@ -79,10 +79,10 @@ async function getHomePageData() {
 
   // Fetch latest news
   const { data: latestNews } = await supabase
-    .from('news_of_the_day')
+    .from('news')
     .select('*')
-    .eq('is_published', true)
-    .order('publish_date', { ascending: false })
+    .eq('is_featured', true)
+    .order('published_at', { ascending: false })
     .limit(3);
 
   // Format fixtures with live scores

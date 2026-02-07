@@ -261,7 +261,7 @@ export default function SettingsPage() {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between py-2 border-b">
                 <span className="text-gray-500">Application</span>
-                <span className="font-medium">SPORTIKON Arena</span>
+                <span className="font-medium">Groundshunt Arena</span>
               </div>
               <div className="flex justify-between py-2 border-b">
                 <span className="text-gray-500">Version</span>

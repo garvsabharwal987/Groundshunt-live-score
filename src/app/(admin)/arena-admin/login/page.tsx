@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import { Button, Input, Card } from '@/components/ui';
@@ -86,10 +87,14 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-xl mb-4">
-            <Trophy className="h-8 w-8 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-white">SPORTIKON Arena</h1>
+          <Image 
+            src="/logo.svg" 
+            alt="Groundshunt Arena" 
+            width={60} 
+            height={60} 
+            className="h-16 w-auto mx-auto mb-4"
+          />
+          <h1 className="text-2xl font-bold text-white">Groundshunt Arena</h1>
           <p className="text-gray-400 mt-1">Admin Portal</p>
         </div>
 
