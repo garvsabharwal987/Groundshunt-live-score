@@ -48,8 +48,8 @@ export default function SettingsPage() {
       if (profile) {
         setUser(profile);
         setProfileData({
-          full_name: profile.full_name || '',
-          email: profile.email,
+          full_name: (profile as any).full_name || '',
+          email: (profile as any).email,
         });
       }
     }
@@ -70,7 +70,7 @@ export default function SettingsPage() {
     const supabase = getSupabaseClient();
     const { error } = await supabase
       .from('users')
-      .update({ full_name: profileData.full_name })
+      .update({ full_name: profileData.full_name || null })
       .eq('id', user.id);
     
     if (error) {

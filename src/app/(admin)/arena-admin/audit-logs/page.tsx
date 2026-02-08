@@ -35,7 +35,7 @@ export default function AuditLogsPage() {
     }
 
     if (tableFilter) {
-      query = query.eq('table_name', tableFilter);
+      query = query.eq('entity_type', tableFilter);
     }
 
     const { data } = await query;
@@ -50,7 +50,7 @@ export default function AuditLogsPage() {
   const filteredLogs = logs.filter(log => {
     const searchLower = searchQuery.toLowerCase();
     return (
-      log.table_name.toLowerCase().includes(searchLower) ||
+      log.entity_type.toLowerCase().includes(searchLower) ||
       log.action.toLowerCase().includes(searchLower) ||
       (log.user?.email || '').toLowerCase().includes(searchLower) ||
       JSON.stringify(log.new_data || {}).toLowerCase().includes(searchLower)
@@ -75,7 +75,7 @@ export default function AuditLogsPage() {
     }
   };
 
-  const uniqueTables = [...new Set(logs.map(l => l.table_name))].sort();
+  const uniqueTables = [...new Set(logs.map(l => l.entity_type))].sort();
   const uniqueActions = [...new Set(logs.map(l => l.action))].sort();
 
   return (
@@ -190,10 +190,10 @@ export default function AuditLogsPage() {
                     <Badge variant={getActionColor(log.action) as any}>
                       {log.action}
                     </Badge>
-                    <span className="font-medium text-gray-900">{log.table_name}</span>
-                    {log.record_id && (
+                    <span className="font-medium text-gray-900">{log.entity_type}</span>
+                    {log.entity_id && (
                       <span className="text-xs text-gray-400 font-mono">
-                        #{log.record_id.slice(0, 8)}
+                        #{log.entity_id.slice(0, 8)}
                       </span>
                     )}
                   </div>
