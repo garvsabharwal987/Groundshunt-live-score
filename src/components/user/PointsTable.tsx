@@ -96,7 +96,7 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
                 </td>
                 {!compact && (
                   <td className="px-4 py-3 text-center font-mono text-sm">
-                    {entry.net_run_rate > 0 ? '+' : ''}{entry.net_run_rate.toFixed(3)}
+                    {entry.net_rating > 0 ? '+' : ''}{entry.net_rating.toFixed(3)}
                   </td>
                 )}
               </tr>

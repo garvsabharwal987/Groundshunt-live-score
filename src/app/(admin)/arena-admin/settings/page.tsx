@@ -67,20 +67,27 @@ export default function SettingsPage() {
     setSaving(true);
     setMessage(null);
     
-    const supabase = getSupabaseClient();
-    const { error } = await supabase
-      .from('users')
-      .update({ full_name: profileData.full_name || null })
-      .eq('id', user.id);
-    
-    if (error) {
-      setMessage({ type: 'error', text: 'Failed to update profile' });
-    } else {
+    try {
+      const res = await fetch('/api/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: user.id,
+          full_name: profileData.full_name || null,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update profile');
+      }
+
       setMessage({ type: 'success', text: 'Profile updated successfully' });
       fetchUser();
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to update profile' });
+    } finally {
+      setSaving(false);
     }
-    
-    setSaving(false);
   };
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
@@ -192,15 +199,15 @@ export default function SettingsPage() {
                 type="email"
                 value={profileData.email}
                 disabled
-                hint="Email cannot be changed"
+                helperText="Email cannot be changed"
               />
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500">Role:</span>
-                <Badge variant={user?.role === 'super_admin' ? 'danger' : 'secondary'}>
+                <Badge variant={user?.role === 'super_admin' ? 'danger' : 'default'}>
                   {user?.role}
                 </Badge>
               </div>
-              <Button type="submit" loading={saving}>
+              <Button type="submit" isLoading={saving}>
                 <Save className="h-4 w-4" />
                 Save Changes
               </Button>
@@ -242,7 +249,7 @@ export default function SettingsPage() {
               onChange={(e) => setPasswordData({ ...passwordData, confirm_password: e.target.value })}
               required
             />
-            <Button type="submit" loading={saving}>
+            <Button type="submit" isLoading={saving}>
               <Key className="h-4 w-4" />
               Update Password
             </Button>
@@ -269,7 +276,7 @@ export default function SettingsPage() {
               </div>
               <div className="flex justify-between py-2 border-b">
                 <span className="text-gray-500">Environment</span>
-                <Badge variant="secondary">
+                <Badge variant="default">
                   {process.env.NODE_ENV || 'development'}
                 </Badge>
               </div>

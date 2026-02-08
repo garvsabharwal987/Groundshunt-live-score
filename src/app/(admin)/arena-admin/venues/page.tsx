@@ -59,7 +59,6 @@ export default function VenuesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = getSupabaseClient();
 
     const payload = {
       name: formData.name,
@@ -67,23 +66,43 @@ export default function VenuesPage() {
       capacity: formData.capacity || null,
     };
 
-    if (selectedVenue) {
-      await supabase.from('venues').update(payload).eq('id', selectedVenue.id);
-    } else {
-      await supabase.from('venues').insert(payload);
-    }
+    try {
+      if (selectedVenue) {
+        const res = await fetch(`/api/venues/${selectedVenue.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Failed to update venue');
+      } else {
+        const res = await fetch('/api/venues', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Failed to create venue');
+      }
 
-    setIsFormOpen(false);
-    fetchData();
+      setIsFormOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleDelete = async () => {
     if (!selectedVenue) return;
     
-    const supabase = getSupabaseClient();
-    await supabase.from('venues').delete().eq('id', selectedVenue.id);
-    setIsDeleteOpen(false);
-    fetchData();
+    try {
+      const res = await fetch(`/api/venues/${selectedVenue.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete venue');
+      setIsDeleteOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const filteredVenues = venues.filter(venue =>
@@ -156,7 +175,7 @@ export default function VenuesPage() {
                     </p>
                   )}
                   {venue.capacity && venue.capacity > 0 && (
-                    <Badge variant="secondary" className="mt-2">
+                    <Badge variant="default" className="mt-2">
                       Capacity: {venue.capacity.toLocaleString()}
                     </Badge>
                   )}

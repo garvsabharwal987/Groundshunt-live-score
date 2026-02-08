@@ -191,7 +191,7 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
               { value: 'postponed', label: 'Postponed' },
             ]}
             value={formData.status}
-            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
           />
 
           <Input
@@ -266,8 +266,8 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
     name: team?.name || '',
     short_name: team?.short_name || '',
     sport_id: team?.sport_id || '',
-    primary_color: team?.primary_color || '#000000',
-    secondary_color: team?.secondary_color || '#FFFFFF',
+    color_primary: team?.color_primary || '#000000',
+    color_secondary: team?.color_secondary || '#FFFFFF',
     logo_url: team?.logo_url || '',
   });
 
@@ -309,7 +309,8 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
       onClose();
     } catch (error) {
       setLoading(false);
-      alert('Error saving team: ' + (error?.message || error));
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      alert('Error saving team: ' + errorMsg);
     }
   };
 
@@ -354,8 +355,8 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
             </label>
             <input
               type="color"
-              value={formData.primary_color}
-              onChange={(e) => setFormData({ ...formData, primary_color: e.target.value })}
+              value={formData.color_primary}
+              onChange={(e) => setFormData({ ...formData, color_primary: e.target.value })}
               className="w-full h-10 rounded-lg cursor-pointer"
             />
           </div>
@@ -366,8 +367,8 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
             </label>
             <input
               type="color"
-              value={formData.secondary_color}
-              onChange={(e) => setFormData({ ...formData, secondary_color: e.target.value })}
+              value={formData.color_secondary}
+              onChange={(e) => setFormData({ ...formData, color_secondary: e.target.value })}
               className="w-full h-10 rounded-lg cursor-pointer"
             />
           </div>

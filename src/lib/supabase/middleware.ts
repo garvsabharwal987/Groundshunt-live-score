@@ -1,6 +1,7 @@
-import { createServerClient, type CookieOptions } from '@supabase/auth-helpers-nextjs';
+import { createServerClient } from '@supabase/ssr';
+import type { CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import { Database } from '../database.types';
+import type { Database } from '../database.types';
 
 export const createMiddlewareClient = (request: NextRequest) => {
   let response = NextResponse.next({
