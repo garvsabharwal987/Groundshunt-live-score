@@ -15,8 +15,7 @@ export async function GET(request: Request) {
         team:teams(*),
         sport:sports(*)
       `)
-      .order('points', { ascending: false })
-      .order('net_run_rate', { ascending: false });
+      .order('points', { ascending: false });
 
     if (sportId) {
       query = query.eq('sport_id', sportId);
@@ -25,10 +24,11 @@ export async function GET(request: Request) {
     const { data, error } = await query;
 
     if (error) {
+      console.error('Standings query error:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data || []);
   } catch (error: any) {
     console.error('Standings API error:', error);
     return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
