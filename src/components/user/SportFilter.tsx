@@ -18,8 +18,8 @@ export function SportFilter({ sports, activeSport, onSelect }: SportFilterProps)
         className={cn(
           'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap',
           activeSport === null
-            ? 'bg-black text-orange-400 border-2 border-orange-500'
-            : 'bg-white text-gray-700 hover:bg-orange-50 border-2 border-gray-200'
+            ? 'bg-black dark:bg-slate-900 text-orange-400 border-2 border-orange-500'
+            : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-700 border-2 border-gray-200 dark:border-slate-700'
         )}
       >
         All Sports
@@ -37,7 +37,7 @@ export function SportFilter({ sports, activeSport, onSelect }: SportFilterProps)
               'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap',
               isActive
                 ? `${colors.bg} ${colors.text} ${colors.border} border-2`
-                : 'bg-white text-gray-700 hover:bg-orange-50 border-2 border-gray-200'
+                : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-700 border-2 border-gray-200 dark:border-slate-700'
             )}
           >
             {sport.name}
@@ -60,8 +60,8 @@ export function SportNavPills({ sports }: { sports: Sport[] }) {
             href={`/fixtures?sport=${sport.slug}`}
             className={cn(
               'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap',
-              'bg-white border-2 border-gray-300 text-black',
-              'hover:border-orange-500 hover:bg-orange-50',
+              'bg-white dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 text-black dark:text-slate-100',
+              'hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-slate-700',
               colors.text
             )}
           >

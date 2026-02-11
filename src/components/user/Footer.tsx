@@ -6,7 +6,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-black text-gray-300 border-t border-orange-500">
+    <footer className="bg-black dark:bg-slate-800 text-gray-300 dark:text-slate-300 border-t border-orange-500 dark:border-orange-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -20,11 +20,11 @@ export function Footer() {
                 className="h-8 w-auto"
               />
               <div>
-                <span className="font-bold text-white">Groundshunt</span>
+                <span className="font-bold text-white dark:text-slate-50">Groundshunt</span>
                 <span className="font-light text-orange-400 ml-1">Arena</span>
               </div>
             </Link>
-            <p className="text-sm text-gray-400 max-w-md">
+            <p className="text-sm text-gray-400 dark:text-slate-400 max-w-md">
               GROUNDSHUNT x SPORTIKON 4.0 - Your one-stop destination for live sports 
               scores, fixtures, and tournament tracking across Table Tennis, Football, 
               Basketball, Badminton, and Volleyball.
@@ -33,7 +33,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-white dark:text-slate-100 uppercase tracking-wider mb-4">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -62,7 +62,7 @@ export function Footer() {
 
           {/* Sports */}
           <div>
-            <h3 className="text-sm font-semibold text-orange-400 uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-orange-400 dark:text-orange-300 uppercase tracking-wider mb-4">
               Sports
             </h3>
             <ul className="space-y-2">

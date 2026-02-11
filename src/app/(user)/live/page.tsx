@@ -71,14 +71,14 @@ export default function LiveScoresPage() {
             </span>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Live Scores</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Live Scores</h1>
+            <p className="text-sm text-gray-500 dark:text-slate-400">
               {liveMatches.length} live match{liveMatches.length !== 1 ? 'es' : ''}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-500">
+        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400">
           <RefreshCw className="h-4 w-4" />
           <span>
             Updated: {lastUpdated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
@@ -99,11 +99,11 @@ export default function LiveScoresPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-xl border border-gray-100 p-4 animate-pulse">
-              <div className="h-4 bg-gray-200 rounded w-20 mb-4"></div>
+            <div key={i} className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-4 animate-pulse">
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-20 mb-4"></div>
               <div className="space-y-3">
-                <div className="h-10 bg-gray-200 rounded"></div>
-                <div className="h-10 bg-gray-200 rounded"></div>
+                <div className="h-10 bg-gray-200 dark:bg-slate-700 rounded"></div>
+                <div className="h-10 bg-gray-200 dark:bg-slate-700 rounded"></div>
               </div>
             </div>
           ))}
@@ -115,10 +115,10 @@ export default function LiveScoresPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-xl border border-gray-100">
-          <Radio className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Live Matches</h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+          <Radio className="h-16 w-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-100 mb-2">No Live Matches</h3>
+          <p className="text-gray-500 dark:text-slate-400 max-w-md mx-auto">
             There are no live matches at the moment. Check back later or browse 
             upcoming fixtures.
           </p>

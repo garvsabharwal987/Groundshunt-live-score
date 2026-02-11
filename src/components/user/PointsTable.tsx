@@ -16,15 +16,15 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
 
   if (standings.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
-        <Trophy className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-        <p className="text-gray-500">No standings available yet</p>
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-8 text-center">
+        <Trophy className="h-12 w-12 text-gray-300 dark:text-slate-600 mx-auto mb-3" />
+        <p className="text-gray-500 dark:text-slate-400">No standings available yet</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 overflow-hidden">
       {/* Header */}
       <div className={cn('px-4 py-3 border-b border-gray-100', colors.bg)}>
         <h3 className={cn('font-semibold', colors.text)}>{sportName} Standings</h3>
@@ -34,18 +34,18 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-50 text-left">
-              <th className="px-4 py-3 font-semibold text-gray-600">#</th>
-              <th className="px-4 py-3 font-semibold text-gray-600">Team</th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-center">P</th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-center">W</th>
-              <th className="px-4 py-3 font-semibold text-gray-600 text-center">L</th>
+            <tr className="bg-gray-50 dark:bg-slate-700 text-left">
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200">#</th>
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200">Team</th>
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">P</th>
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">W</th>
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">L</th>
               {!compact && (
-                <th className="px-4 py-3 font-semibold text-gray-600 text-center">D</th>
+                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">D</th>
               )}
-              <th className="px-4 py-3 font-semibold text-gray-600 text-center">Pts</th>
+              <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">Pts</th>
               {!compact && (
-                <th className="px-4 py-3 font-semibold text-gray-600 text-center">NRR</th>
+                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-slate-200 text-center">NRR</th>
               )}
             </tr>
           </thead>
@@ -54,9 +54,9 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
               <tr
                 key={entry.id}
                 className={cn(
-                  'border-t border-gray-50 hover:bg-gray-50 transition-colors',
-                  index < 2 && 'bg-green-50/50',
-                  index >= standings.length - 2 && standings.length > 4 && 'bg-red-50/50'
+                  'border-t border-gray-50 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors',
+                  index < 2 && 'bg-green-50/50 dark:bg-green-900/20',
+                  index >= standings.length - 2 && standings.length > 4 && 'bg-red-50/50 dark:bg-red-900/20'
                 )}
               >
                 <td className="px-4 py-3">
@@ -78,24 +78,24 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
                     >
                       {entry.team?.short_name?.charAt(0) || 'T'}
                     </div>
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-gray-900 dark:text-slate-100">
                       {compact ? entry.team?.short_name : entry.team?.name}
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-center text-gray-600">{entry.played}</td>
-                <td className="px-4 py-3 text-center text-green-600 font-medium">{entry.won}</td>
-                <td className="px-4 py-3 text-center text-red-600 font-medium">{entry.lost}</td>
+                <td className="px-4 py-3 text-center text-gray-600 dark:text-slate-400">{entry.played}</td>
+                <td className="px-4 py-3 text-center text-green-600 dark:text-green-400 font-medium">{entry.won}</td>
+                <td className="px-4 py-3 text-center text-red-600 dark:text-red-400 font-medium">{entry.lost}</td>
                 {!compact && (
-                  <td className="px-4 py-3 text-center text-gray-600">{entry.drawn}</td>
+                  <td className="px-4 py-3 text-center text-gray-600 dark:text-slate-400">{entry.drawn}</td>
                 )}
                 <td className="px-4 py-3 text-center">
-                  <span className="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 bg-primary-50 text-primary-700 rounded font-bold">
+                  <span className="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded font-bold">
                     {entry.points}
                   </span>
                 </td>
                 {!compact && (
-                  <td className="px-4 py-3 text-center font-mono text-sm">
+                  <td className="px-4 py-3 text-center font-mono text-sm dark:text-slate-300">
                     {typeof entry.net_rating === 'number' && entry.net_rating > 0 ? '+' : ''}{typeof entry.net_rating === 'number' ? entry.net_rating.toFixed(3) : '—'}
                   </td>
                 )}

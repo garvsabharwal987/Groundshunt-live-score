@@ -110,12 +110,12 @@ export function FixturesContent() {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+              className="px-3 py-2 text-sm border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
             />
             {selectedDate && (
               <button
                 onClick={() => setSelectedDate('')}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300"
               >
                 Clear
               </button>
@@ -128,11 +128,11 @@ export function FixturesContent() {
       {loading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-xl border border-gray-100 p-4 animate-pulse">
-              <div className="h-4 bg-gray-200 rounded w-32 mb-4"></div>
+            <div key={i} className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-4 animate-pulse">
+              <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-32 mb-4"></div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="h-24 bg-gray-200 rounded"></div>
-                <div className="h-24 bg-gray-200 rounded"></div>
+                <div className="h-24 bg-gray-200 dark:bg-slate-700 rounded"></div>
+                <div className="h-24 bg-gray-200 dark:bg-slate-700 rounded"></div>
               </div>
             </div>
           ))}
@@ -142,11 +142,11 @@ export function FixturesContent() {
           {Object.entries(groupedFixtures).map(([date, dateFixtures]) => (
             <section key={date}>
               <div className="flex items-center gap-2 mb-4">
-                <div className="h-px flex-1 bg-gray-200"></div>
-                <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
+                <div className="h-px flex-1 bg-gray-200 dark:bg-slate-700"></div>
+                <span className="px-3 py-1 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 text-sm font-medium rounded-full">
                   {formatDate(date)}
                 </span>
-                <div className="h-px flex-1 bg-gray-200"></div>
+                <div className="h-px flex-1 bg-gray-200 dark:bg-slate-700"></div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -158,10 +158,10 @@ export function FixturesContent() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-xl border border-gray-100">
-          <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Fixtures Found</h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+          <Calendar className="h-16 w-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-100 mb-2">No Fixtures Found</h3>
+          <p className="text-gray-500 dark:text-slate-400 max-w-md mx-auto">
             No matches found with the selected filters. Try adjusting your filters or check back later.
           </p>
         </div>

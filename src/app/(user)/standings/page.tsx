@@ -61,8 +61,8 @@ export default function StandingsPage() {
       <div className="flex items-center gap-3 mb-6">
         <Trophy className="h-8 w-8 text-yellow-500" />
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Standings</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Standings</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400">
             Tournament standings and points table
           </p>
         </div>
@@ -70,15 +70,15 @@ export default function StandingsPage() {
 
       {loading ? (
         <div className="space-y-4">
-          <div className="flex gap-4 border-b border-gray-200 pb-2">
+          <div className="flex gap-4 border-b border-gray-200 dark:border-slate-700 pb-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-8 w-24 bg-gray-200 rounded animate-pulse"></div>
+              <div key={i} className="h-8 w-24 bg-gray-200 dark:bg-slate-700 rounded animate-pulse"></div>
             ))}
           </div>
-          <div className="bg-white rounded-xl border border-gray-100 p-4 animate-pulse">
-            <div className="h-6 bg-gray-200 rounded w-40 mb-4"></div>
+          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-4 animate-pulse">
+            <div className="h-6 bg-gray-200 dark:bg-slate-700 rounded w-40 mb-4"></div>
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-12 bg-gray-200 rounded mb-2"></div>
+              <div key={i} className="h-12 bg-gray-200 dark:bg-slate-700 rounded mb-2"></div>
             ))}
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function StandingsPage() {
           )}
 
           {/* Legend */}
-          <div className="flex items-center gap-6 text-sm text-gray-500">
+          <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
               <span>Qualification Zone</span>
@@ -113,10 +113,10 @@ export default function StandingsPage() {
           </div>
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-xl border border-gray-100">
-          <Trophy className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Standings Available</h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+          <Trophy className="h-16 w-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2">No Standings Available</h3>
+          <p className="text-gray-500 dark:text-slate-400 max-w-md mx-auto">
             Standings will appear here once matches have been completed.
           </p>
         </div>

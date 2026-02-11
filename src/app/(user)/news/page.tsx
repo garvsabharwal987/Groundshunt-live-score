@@ -28,8 +28,8 @@ export default async function NewsPage() {
       <div className="flex items-center gap-3 mb-6">
         <Newspaper className="h-8 w-8 text-green-500" />
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">News of the Day</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">News of the Day</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400">
             Daily updates, highlights, and announcements
           </p>
         </div>
@@ -47,7 +47,7 @@ export default async function NewsPage() {
           {/* Rest of News */}
           {restNews.length > 0 && (
             <section>
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">More Updates</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-4">More Updates</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {restNews.map((item) => (
                   <NewsCard key={item.id} news={item} />
@@ -57,10 +57,10 @@ export default async function NewsPage() {
           )}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white rounded-xl border border-gray-100">
-          <Newspaper className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No News Yet</h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+        <div className="text-center py-16 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+          <Newspaper className="h-16 w-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2">No News Yet</h3>
+          <p className="text-gray-500 dark:text-slate-400 max-w-md mx-auto">
             News and updates will appear here. Check back later!
           </p>
         </div>

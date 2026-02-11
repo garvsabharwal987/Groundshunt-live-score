@@ -37,16 +37,16 @@ export default async function NewsDetailPage({ params }: PageProps) {
       {/* Back Button */}
       <Link
         href="/news"
-        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+        className="inline-flex items-center gap-2 text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-200 mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to News
       </Link>
 
-      <article className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+      <article className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 overflow-hidden">
         {/* Featured Image */}
         {news.featured_image_url ? (
-          <div className="aspect-video bg-gray-100">
+          <div className="aspect-video bg-gray-100 dark:bg-slate-700">
             <img
               src={news.featured_image_url}
               alt={news.title}
@@ -61,7 +61,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
         <div className="p-6 md:p-8">
           {/* Meta */}
-          <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-4">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
               {formatDate(news.publish_date)}
@@ -69,19 +69,19 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{news.title}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-50 mb-4">{news.title}</h1>
 
           {/* Summary */}
           {news.summary && (
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            <p className="text-lg text-gray-600 dark:text-slate-300 mb-6 leading-relaxed">
               {news.summary}
             </p>
           )}
 
           {/* Content */}
-          <div className="prose prose-gray max-w-none mb-8">
+          <div className="prose prose-gray dark:prose-invert max-w-none mb-8">
             {news.content.split('\n').map((paragraph, index) => (
-              <p key={index} className="mb-4 text-gray-700 leading-relaxed">
+              <p key={index} className="mb-4 text-gray-700 dark:text-slate-300 leading-relaxed">
                 {paragraph}
               </p>
             ))}
@@ -90,18 +90,18 @@ export default async function NewsDetailPage({ params }: PageProps) {
           {/* Highlights */}
           {highlights.length > 0 && (
             <section className="mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Highlights</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-50 mb-4">Highlights</h2>
               <ul className="space-y-2">
                 {highlights.map((highlight, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
+                    className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg"
                   >
                     <span className="text-lg">
                       {highlight.type === 'performance' ? '⭐' : 
                        highlight.type === 'result' ? '🏆' : '📌'}
                     </span>
-                    <span className="text-gray-700">{highlight.text}</span>
+                    <span className="text-gray-700 dark:text-slate-300">{highlight.text}</span>
                   </li>
                 ))}
               </ul>
@@ -111,19 +111,19 @@ export default async function NewsDetailPage({ params }: PageProps) {
           {/* Notable Performances */}
           {performances.length > 0 && (
             <section className="mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Notable Performances</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-50 mb-4">Notable Performances</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {performances.map((perf, index) => (
                   <div
                     key={index}
-                    className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-100 rounded-lg"
+                    className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/30 dark:to-orange-950/30 border border-yellow-100 dark:border-yellow-800 rounded-lg"
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <User className="h-4 w-4 text-yellow-600" />
-                      <span className="font-semibold text-gray-900">{perf.player}</span>
+                      <User className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                      <span className="font-semibold text-gray-900 dark:text-slate-50">{perf.player}</span>
                     </div>
-                    <p className="text-sm text-gray-600">{perf.team}</p>
-                    <p className="text-sm font-medium text-yellow-700 mt-1">{perf.achievement}</p>
+                    <p className="text-sm text-gray-600 dark:text-slate-400">{perf.team}</p>
+                    <p className="text-sm font-medium text-yellow-700 dark:text-yellow-400 mt-1">{perf.achievement}</p>
                   </div>
                 ))}
               </div>

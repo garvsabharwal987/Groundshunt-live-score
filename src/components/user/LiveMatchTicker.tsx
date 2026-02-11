@@ -41,11 +41,11 @@ export function LiveMatchTicker() {
 
   if (loading) {
     return (
-    <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-300">
+    <div className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-slate-800 dark:to-slate-700 border-b border-orange-300 dark:border-orange-500">
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center gap-2 mb-3">
-          <Radio className="h-4 w-4 text-orange-600" />
-          <span className="text-sm font-semibold text-orange-600">Live Now</span>
+          <Radio className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+          <span className="text-sm font-semibold text-orange-600 dark:text-orange-400">Live Now</span>
           </div>
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
             <MatchCardSkeleton />
@@ -60,15 +60,15 @@ export function LiveMatchTicker() {
   }
 
   return (
-    <div className="bg-gradient-to-r from-red-50 to-orange-50 border-b border-red-100">
+    <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-slate-800 dark:to-slate-700 border-b border-red-100 dark:border-orange-500">
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center gap-2 mb-3">
           <div className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500"></span>
           </div>
-          <span className="text-sm font-semibold text-orange-600">Live Now</span>
-          <span className="text-xs text-orange-400">({liveMatches.length} matches)</span>
+          <span className="text-sm font-semibold text-orange-600 dark:text-orange-400">Live Now</span>
+          <span className="text-xs text-orange-400 dark:text-orange-300">({liveMatches.length} matches)</span>
         </div>
         
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">

@@ -12,9 +12,9 @@ export function NewsCard({ news, featured = false }: NewsCardProps) {
   if (featured) {
     return (
       <Link href={`/news/${news.id}`}>
-        <article className="group relative bg-white rounded-xl overflow-hidden border-2 border-gray-300 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
+        <article className="group relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden border-2 border-gray-300 dark:border-slate-700 hover:border-orange-500 hover:shadow-lg transition-all duration-300">
           {/* Featured Image */}
-          <div className="aspect-video bg-gradient-to-br from-orange-400 to-orange-600 relative">
+          <div className="aspect-video bg-gradient-to-br from-orange-400 to-orange-600 relative dark:opacity-90">
             {news.featured_image_url ? (
               <img
                 src={news.featured_image_url}
@@ -49,9 +49,9 @@ export function NewsCard({ news, featured = false }: NewsCardProps) {
 
   return (
     <Link href={`/news/${news.id}`}>
-      <article className="group bg-white rounded-xl overflow-hidden border-2 border-gray-300 hover:border-orange-500 hover:shadow-md transition-all duration-200">
+      <article className="group bg-white dark:bg-slate-800 rounded-xl overflow-hidden border-2 border-gray-300 dark:border-slate-700 hover:border-orange-500 hover:shadow-md transition-all duration-200">
         {/* Thumbnail */}
-        <div className="aspect-video bg-gray-100 relative">
+        <div className="aspect-video bg-gray-100 dark:bg-slate-700 relative">
           {news.featured_image_url ? (
             <img
               src={news.featured_image_url}
@@ -67,15 +67,15 @@ export function NewsCard({ news, featured = false }: NewsCardProps) {
         
         {/* Content */}
         <div className="p-4">
-          <div className="flex items-center gap-2 text-xs text-orange-600 mb-2">
+          <div className="flex items-center gap-2 text-xs text-orange-600 dark:text-orange-400 mb-2">
             <Calendar className="h-3.5 w-3.5" />
             {formatDate(news.publish_date)}
           </div>
-          <h3 className="font-semibold text-black group-hover:text-orange-600 transition-colors line-clamp-2 mb-2">
+          <h3 className="font-semibold text-black dark:text-slate-100 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors line-clamp-2 mb-2">
             {news.title}
           </h3>
           {news.summary && (
-            <p className="text-sm text-gray-600 line-clamp-2">{news.summary}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 line-clamp-2">{news.summary}</p>
           )}
           <div className="flex items-center gap-1 text-orange-500 text-sm font-medium mt-3 group-hover:gap-2 transition-all">
             Read more
