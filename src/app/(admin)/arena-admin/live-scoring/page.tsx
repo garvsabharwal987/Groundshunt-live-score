@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Button, Card, Select } from '@/components/ui';
-import { LiveScoreEditor } from '@/components/admin';
+import { LiveScoreEditor, FinalScoreInput } from '@/components/admin';
 import { Radio, Play, Square, CheckCircle } from 'lucide-react';
 import { formatDate, formatTime, cn } from '@/lib/utils';
 import type { FixtureWithDetails, Sport } from '@/lib/database.types';
@@ -22,7 +22,7 @@ export default function LiveScoringPage() {
       if (Array.isArray(sportsData)) setSports(sportsData);
 
       // Fetch live and upcoming fixtures via API
-      const fixturesRes = await fetch('/api/live?includeUpcoming=true');
+      const fixturesRes = await fetch('/api/fixtures');
       const fixturesData = await fixturesRes.json();
 
       if (Array.isArray(fixturesData)) {
@@ -94,6 +94,8 @@ export default function LiveScoringPage() {
 
   const liveFixtures = fixtures.filter(f => f.status === 'live');
   const upcomingFixtures = fixtures.filter(f => f.status === 'upcoming');
+  const completedFixtures = fixtures.filter(f => f.status === 'completed');
+  const directResultFixtures = fixtures.filter(f => !f.enable_live_scoring && f.status === 'live');
 
   return (
     <div className="space-y-6">
@@ -198,6 +200,72 @@ export default function LiveScoringPage() {
             </div>
           )}
 
+          {/* Direct Result Matches (Non-Live Scoring) */}
+          {directResultFixtures.length > 0 && (
+            <div>
+              <h2 className="text-sm font-semibold text-orange-600 mb-2">
+                Direct Results ({directResultFixtures.length})
+              </h2>
+              <div className="space-y-2">
+                {directResultFixtures.map((fixture) => (
+                  <button
+                    key={fixture.id}
+                    onClick={() => setSelectedFixture(fixture)}
+                    className={cn(
+                      'w-full p-3 bg-white rounded-lg border text-left transition-all group',
+                      selectedFixture?.id === fixture.id
+                        ? 'border-orange-500 ring-2 ring-orange-500/20'
+                        : 'border-gray-200 hover:border-gray-300'
+                    )}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-gray-500">{fixture.sport.name}</span>
+                      <span className="text-xs px-1.5 py-0.5 bg-orange-100 text-orange-600 rounded group-hover:bg-orange-200 transition-colors">
+                        EDIT SCORE
+                      </span>
+                    </div>
+                    <p className="font-medium text-gray-900">
+                      {fixture.team_a.short_name} vs {fixture.team_b.short_name}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Completed Matches */}
+          {completedFixtures.length > 0 && (
+            <div>
+              <h2 className="text-sm font-semibold text-green-600 mb-2">
+                Completed ({completedFixtures.length})
+              </h2>
+              <div className="space-y-2">
+                {completedFixtures.slice(0, 10).map((fixture) => (
+                  <button
+                    key={fixture.id}
+                    onClick={() => setSelectedFixture(fixture)}
+                    className={cn(
+                      'w-full p-3 bg-white rounded-lg border text-left transition-all group',
+                      selectedFixture?.id === fixture.id
+                        ? 'border-green-500 ring-2 ring-green-500/20'
+                        : 'border-gray-200 hover:border-gray-300'
+                    )}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-gray-500">{fixture.sport.name}</span>
+                      <span className="text-xs px-1.5 py-0.5 bg-green-100 text-green-600 rounded group-hover:bg-green-200 transition-colors">
+                        EDIT SCORE
+                      </span>
+                    </div>
+                    <p className="font-medium text-gray-900">
+                      {fixture.team_a.short_name} vs {fixture.team_b.short_name}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {fixtures.length === 0 && !loading && (
             <div className="text-center py-12 text-gray-500">
               <Radio className="h-12 w-12 mx-auto mb-3 text-gray-300" />
@@ -210,17 +278,18 @@ export default function LiveScoringPage() {
         <div className="lg:col-span-2">
           {selectedFixture ? (
             <div className="space-y-4">
-              <LiveScoreEditor
-                fixture={selectedFixture}
-                onUpdate={fetchData}
-              />
+              {selectedFixture.status === 'live' && selectedFixture.enable_live_scoring === true ? (
+                // Live match with live scoring enabled
+                <>
+                  <LiveScoreEditor
+                    fixture={selectedFixture}
+                    onUpdate={fetchData}
+                  />
 
-              {/* Match Controls */}
-              <Card>
-                <h3 className="font-semibold text-gray-900 mb-4">Match Controls</h3>
-                <div className="flex flex-wrap gap-3">
-                  {selectedFixture.status === 'live' && (
-                    <>
+                  {/* Match Controls */}
+                  <Card>
+                    <h3 className="font-semibold text-gray-900 mb-4">Match Controls</h3>
+                    <div className="flex flex-wrap gap-3">
                       <Button
                         variant="danger"
                         onClick={() => handleStatusChange(selectedFixture.id, 'upcoming')}
@@ -248,10 +317,42 @@ export default function LiveScoringPage() {
                         <CheckCircle className="h-4 w-4" />
                         End Match
                       </Button>
-                    </>
+                    </div>
+                  </Card>
+                </>
+              ) : (
+                // Completed match or direct result match
+                <>
+                  <FinalScoreInput
+                    fixture={selectedFixture}
+                    onUpdate={fetchData}
+                  />
+                  {selectedFixture.status === 'live' && selectedFixture.enable_live_scoring === false && (
+                    <Card className="bg-orange-50 border-orange-200">
+                      <div className="flex gap-3">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-orange-900 mb-1">Direct Result Match</h4>
+                          <p className="text-sm text-orange-800">
+                            This match uses direct result scoring. Enter all the final scores for this sport below and click "Save Final Score" to mark it as completed.
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
                   )}
-                </div>
-              </Card>
+                  {selectedFixture.status === 'completed' && (
+                    <Card className="bg-green-50 border-green-200">
+                      <div className="flex gap-3">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-green-900 mb-1">Edit Completed Match</h4>
+                          <p className="text-sm text-green-800">
+                            You can update the final scores for this completed match. Make any corrections and click "Save Final Score" to update.
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  )}
+                </>
+              )}
             </div>
           ) : (
             <Card className="flex items-center justify-center h-64">
