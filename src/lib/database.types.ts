@@ -129,6 +129,7 @@ export interface Database {
           winner_id: string | null;
           is_draw: boolean;
           summary: string | null;
+          enable_live_scoring: boolean;
           created_at: string;
           updated_at: string;
         };
@@ -146,6 +147,7 @@ export interface Database {
           winner_id?: string | null;
           is_draw?: boolean;
           summary?: string | null;
+          enable_live_scoring?: boolean;
           created_at?: string;
           updated_at?: string;
         };
@@ -163,6 +165,7 @@ export interface Database {
           winner_id?: string | null;
           is_draw?: boolean;
           summary?: string | null;
+          enable_live_scoring?: boolean;
           created_at?: string;
           updated_at?: string;
         };

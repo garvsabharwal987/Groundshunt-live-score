@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Button, Input, Select, Modal } from '@/components/ui';
-import { X, Plus, Trash2 } from 'lucide-react';
+import { X, Plus, Trash2, AlertCircle } from 'lucide-react';
+import { SPORTS_CONFIG } from '@/lib/constants';
 import type { Sport, Team, Venue, Fixture } from '@/lib/database.types';
 
 interface FixtureFormProps {
@@ -29,6 +30,7 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
     match_number: fixture?.match_number?.toString() || '',
     winner_id: fixture?.winner_id || '',
     is_draw: fixture?.is_draw || false,
+    enable_live_scoring: fixture?.enable_live_scoring !== undefined ? fixture.enable_live_scoring : true,
   });
 
   useEffect(() => {
@@ -88,6 +90,7 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
       match_number: formData.match_number ? parseInt(formData.match_number) : null,
       winner_id: formData.winner_id || null,
       is_draw: formData.is_draw,
+      enable_live_scoring: formData.enable_live_scoring,
     };
 
     try {
@@ -131,6 +134,33 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
           placeholder="Select sport"
           required
         />
+
+        {/* Sport Scoring Rules */}
+        {formData.sport_id && sports.length > 0 && (() => {
+          const selectedSport = sports.find(s => s.id === formData.sport_id);
+          const sportConfig = selectedSport ? SPORTS_CONFIG[selectedSport.slug as keyof typeof SPORTS_CONFIG] : null;
+          return sportConfig ? (
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="flex gap-3">
+                <AlertCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-1">Scoring Rule</h4>
+                  <p className="text-sm text-blue-800 dark:text-blue-300">{sportConfig.description}</p>
+                  <div className="mt-2 text-xs text-blue-700 dark:text-blue-400">
+                    <p className="font-medium mb-1">Score Fields:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {sportConfig.scoreFields?.map((field: any) => (
+                        <span key={field.key} className="bg-white dark:bg-slate-700 px-2 py-1 rounded">
+                          {field.label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null;
+        })()}
 
         <div className="grid grid-cols-2 gap-4">
           <Select
@@ -237,6 +267,26 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
               <span className="text-sm font-medium text-gray-700">Draw</span>
             </label>
           </div>
+        </div>
+
+        {/* Live Scoring Option */}
+        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.enable_live_scoring}
+              onChange={(e) => setFormData({ ...formData, enable_live_scoring: e.target.checked })}
+              className="w-5 h-5 rounded border-gray-300 mt-0.5"
+            />
+            <div className="flex-1">
+              <p className="font-medium text-gray-900 dark:text-white">Enable Live Scoring</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                {formData.enable_live_scoring 
+                  ? 'Live score updates will be available during the match' 
+                  : 'Only final results will be entered'}
+              </p>
+            </div>
+          </label>
         </div>
 
         <div className="flex justify-end gap-3 pt-4">

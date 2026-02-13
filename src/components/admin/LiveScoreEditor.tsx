@@ -79,21 +79,24 @@ export function LiveScoreEditor({ fixture, onUpdate }: LiveScoreEditorProps) {
     }
   };
 
-  const scoreFields = sportConfig?.scoreFields || ['score'];
+  // Show all score fields including summary fields
+  const scoreFields = sportConfig?.scoreFields || [];
 
-  const renderScoreField = (team: 'a' | 'b', field: string) => {
+  const renderScoreField = (team: 'a' | 'b', fieldObj: any) => {
+    const fieldKey = fieldObj.key || fieldObj;
+    const fieldLabel = fieldObj.label || fieldObj.replace(/_/g, ' ');
     const score = team === 'a' ? teamAScore : teamBScore;
-    const value = score[field] || 0;
+    const value = score[fieldKey] || 0;
 
     return (
-      <div key={field} className="flex items-center gap-2">
+      <div key={fieldKey} className="flex items-center gap-2">
         <label className="text-sm font-medium text-gray-600 capitalize w-20">
-          {field.replace(/_/g, ' ')}
+          {fieldLabel}
         </label>
         <div className="flex items-center gap-1">
           <button
             type="button"
-            onClick={() => updateScore(team, field, -1)}
+            onClick={() => updateScore(team, fieldKey, -1)}
             className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
           >
             <Minus className="h-4 w-4" />
@@ -101,12 +104,12 @@ export function LiveScoreEditor({ fixture, onUpdate }: LiveScoreEditorProps) {
           <input
             type="number"
             value={value}
-            onChange={(e) => setScoreValue(team, field, parseInt(e.target.value) || 0)}
+            onChange={(e) => setScoreValue(team, fieldKey, parseInt(e.target.value) || 0)}
             className="w-16 text-center font-mono font-bold text-lg border border-gray-300 rounded-lg py-1"
           />
           <button
             type="button"
-            onClick={() => updateScore(team, field, 1)}
+            onClick={() => updateScore(team, fieldKey, 1)}
             className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
           >
             <Plus className="h-4 w-4" />
@@ -161,14 +164,16 @@ export function LiveScoreEditor({ fixture, onUpdate }: LiveScoreEditorProps) {
         </div>
 
         {/* Score Fields */}
-        <div className="grid grid-cols-2 gap-8 mb-6">
-          <div className="space-y-3">
-            {scoreFields.map(field => renderScoreField('a', field))}
+        {scoreFields.length > 0 && (
+          <div className="grid grid-cols-2 gap-8 mb-6">
+            <div className="space-y-3">
+              {scoreFields.map((field: any) => renderScoreField('a', field))}
+            </div>
+            <div className="space-y-3">
+              {scoreFields.map((field: any) => renderScoreField('b', field))}
+            </div>
           </div>
-          <div className="space-y-3">
-            {scoreFields.map(field => renderScoreField('b', field))}
-          </div>
-        </div>
+        )}
 
         {/* Match Info */}
         <div className="grid grid-cols-2 gap-4 mb-6">

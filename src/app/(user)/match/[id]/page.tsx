@@ -7,6 +7,7 @@ import { StatusBadge, Card } from '@/components/ui';
 import { cn, formatDate, formatTime, getSportColorClasses } from '@/lib/utils';
 import { SPORTS_CONFIG } from '@/lib/constants';
 import { ArrowLeft, MapPin, Clock, RefreshCw } from 'lucide-react';
+import { SetsTable } from '@/components/user';
 import type { FixtureWithDetails } from '@/lib/database.types';
 
 export default function MatchDetailPage() {
@@ -39,13 +40,16 @@ export default function MatchDetailPage() {
   useEffect(() => {
     fetchMatch();
 
-    // Poll every 3 seconds for live matches
-    const pollInterval = setInterval(fetchMatch, 3000);
+    // Poll every 3 seconds only for live matches with live scoring enabled
+    let pollInterval: NodeJS.Timeout | null = null;
+    if (fixture?.status === 'live' && fixture?.enable_live_scoring) {
+      pollInterval = setInterval(fetchMatch, 3000);
+    }
 
     return () => {
-      clearInterval(pollInterval);
+      if (pollInterval) clearInterval(pollInterval);
     };
-  }, [matchId]);
+  }, [matchId, fixture?.enable_live_scoring]);
 
   if (loading) {
     return (
@@ -152,7 +156,7 @@ export default function MatchDetailPage() {
 
             {/* VS / Match Info */}
             <div className="text-center">
-              {isLive ? (
+              {isLive && fixture.enable_live_scoring ? (
                 <div className="space-y-2">
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-700 dark:bg-red-600 text-white dark:text-red-100 rounded-full">
                     <span className="relative flex h-2 w-2">
@@ -171,6 +175,11 @@ export default function MatchDetailPage() {
                       {fixture.live_score.elapsed_time}
                     </p>
                   )}
+                </div>
+              ) : isLive && !fixture.enable_live_scoring ? (
+                <div className="text-black dark:text-slate-100">
+                  <p className="text-lg font-bold">PENDING</p>
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-400">Results coming</p>
                 </div>
               ) : isCompleted ? (
                 <div className="text-black dark:text-slate-100">
@@ -225,6 +234,21 @@ export default function MatchDetailPage() {
           )}
         </div>
       </Card>
+
+      {/* Sets Table for sports with set-based scoring */}
+      {(isLive || isCompleted) && Object.keys(teamAScore).length > 0 && (
+        <SetsTable
+          sport={fixture.sport.slug}
+          teamAName={fixture.team_a.name}
+          teamAShort={fixture.team_a.short_name}
+          teamAScore={teamAScore}
+          teamBName={fixture.team_b.name}
+          teamBShort={fixture.team_b.short_name}
+          teamBScore={teamBScore}
+          teamAColor={fixture.team_a.color_primary}
+          teamBColor={fixture.team_b.color_primary}
+        />
+      )}
 
       {/* Match Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

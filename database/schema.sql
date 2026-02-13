@@ -71,6 +71,7 @@ CREATE TABLE fixtures (
     winner_id UUID REFERENCES teams(id) ON DELETE SET NULL,
     is_draw BOOLEAN DEFAULT false,
     summary TEXT, -- Brief match summary
+    enable_live_scoring BOOLEAN DEFAULT true, -- Whether to use live scoring or direct results
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT different_teams CHECK (team_a_id != team_b_id)

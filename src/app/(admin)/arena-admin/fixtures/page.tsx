@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button, Card, StatusBadge, PillTabs } from '@/components/ui';
 import { FixtureForm } from '@/components/admin';
-import { Plus, Edit2, Trash2, Calendar, Search } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, Search, Radio } from 'lucide-react';
 import { formatDate, formatTime } from '@/lib/utils';
 import type { FixtureWithDetails, Sport } from '@/lib/database.types';
 
@@ -120,6 +120,7 @@ export default function AdminFixturesPage() {
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Date & Time</th>
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Round</th>
+                <th className="px-4 py-3 text-center font-semibold text-gray-700">Live Scoring</th>
                 <th className="px-4 py-3 text-right font-semibold text-gray-700">Actions</th>
               </tr>
             </thead>
@@ -127,7 +128,7 @@ export default function AdminFixturesPage() {
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="border-b border-gray-100">
-                    <td colSpan={6} className="px-4 py-4">
+                    <td colSpan={7} className="px-4 py-4">
                       <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
                     </td>
                   </tr>
@@ -165,6 +166,19 @@ export default function AdminFixturesPage() {
                       <StatusBadge status={fixture.status} />
                     </td>
                     <td className="px-4 py-4 text-gray-600">{fixture.round || '-'}</td>
+                    <td className="px-4 py-4 text-center">
+                      {fixture.enable_live_scoring ? (
+                        <span className="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                          <Radio className="h-3 w-3" />
+                          Enabled
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">
+                          <span className="h-3 w-3 rounded-full bg-gray-400"></span>
+                          Direct
+                        </span>
+                      )}
+                    </td>
                     <td className="px-4 py-4">
                       <div className="flex items-center justify-end gap-2">
                         <button
@@ -185,7 +199,7 @@ export default function AdminFixturesPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-gray-500">
+                  <td colSpan={7} className="px-4 py-12 text-center text-gray-500">
                     <Calendar className="h-12 w-12 mx-auto mb-3 text-gray-300" />
                     <p>No fixtures found</p>
                   </td>

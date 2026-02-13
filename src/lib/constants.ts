@@ -13,43 +13,75 @@ export const FIXTURE_POLL_INTERVAL = 30000; // 30 seconds for fixture updates
 export const DEFAULT_PAGE_SIZE = 20;
 export const MAX_PAGE_SIZE = 100;
 
-// Sports configuration
+// Sports configuration with exact scoring rules
 export const SPORTS_CONFIG = {
   tabletennis: {
     name: 'Table Tennis',
     icon: 'Zap',
     color: '#f59e0b',
-    scoreFields: ['set1', 'set2', 'set3', 'sets_won'],
+    scoreFields: [
+      { key: 'set1', label: 'Set 1', type: 'points' },
+      { key: 'set2', label: 'Set 2', type: 'points' },
+      { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'sets_won', label: 'Sets Won', type: 'summary' },
+    ],
     displayFormat: (score: { sets_won?: number }) => 
       `${score.sets_won || 0} sets`,
+    description: 'Best of 3 sets, first to 11 points',
   },
   football: {
     name: 'Football',
     icon: 'Circle',
     color: '#2563eb',
-    scoreFields: ['goals'],
+    scoreFields: [
+      { key: 'goals', label: 'Goals', type: 'points' },
+      { key: 'shots', label: 'Shots', type: 'stats' },
+      { key: 'possession', label: 'Possession %', type: 'stats' },
+    ],
     displayFormat: (score: { goals?: number }) => `${score.goals || 0}`,
+    description: '90 minutes, 2 halves of 45 minutes each',
   },
   basketball: {
     name: 'Basketball',
     icon: 'Circle',
     color: '#ea580c',
-    scoreFields: ['q1', 'q2', 'q3', 'q4', 'total'],
+    scoreFields: [
+      { key: 'q1', label: 'Q1', type: 'quarter' },
+      { key: 'q2', label: 'Q2', type: 'quarter' },
+      { key: 'q3', label: 'Q3', type: 'quarter' },
+      { key: 'q4', label: 'Q4', type: 'quarter' },
+      { key: 'total', label: 'Total Points', type: 'summary' },
+    ],
     displayFormat: (score: { total?: number }) => `${score.total || 0}`,
+    description: '4 quarters of 10 minutes each',
   },
   badminton: {
     name: 'Badminton',
     icon: 'Feather',
     color: '#7c3aed',
-    scoreFields: ['set1', 'set2', 'set3', 'sets_won'],
+    scoreFields: [
+      { key: 'set1', label: 'Set 1', type: 'points' },
+      { key: 'set2', label: 'Set 2', type: 'points' },
+      { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'sets_won', label: 'Sets Won', type: 'summary' },
+    ],
     displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
+    description: 'Best of 3 sets, first to 21 points',
   },
   volleyball: {
     name: 'Volleyball',
     icon: 'Circle',
     color: '#dc2626',
-    scoreFields: ['set1', 'set2', 'set3', 'set4', 'set5', 'sets_won'],
+    scoreFields: [
+      { key: 'set1', label: 'Set 1', type: 'points' },
+      { key: 'set2', label: 'Set 2', type: 'points' },
+      { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'set4', label: 'Set 4', type: 'points' },
+      { key: 'set5', label: 'Set 5', type: 'points' },
+      { key: 'sets_won', label: 'Sets Won', type: 'summary' },
+    ],
     displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
+    description: 'Best of 5 sets, first to 25 points',
   },
 } as const;
 
