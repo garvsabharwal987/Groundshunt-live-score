@@ -114,11 +114,25 @@ CREATE INDEX IF NOT EXISTS idx_news_sport ON news_of_the_day(sport_id);
 -- Insert sample sports data
 INSERT INTO sports (name, slug, icon, is_active) 
 VALUES 
-  ('Table Tennis', 'tabletennis', '🏓', true),
+  ('Table Tennis', 'table-tennis', '🏓', true),
   ('Football', 'football', '⚽', true),
   ('Basketball', 'basketball', '🏀', true),
   ('Badminton', 'badminton', '🏸', true),
-  ('Volleyball', 'volleyball', '🏐', true)
+  ('Volleyball', 'volleyball', '🏐', true),
+  ('Cricket', 'cricket', '🏏', true),
+  ('Pickleball', 'pickleball', '🏓', true),
+  ('Kabaddi', 'kabaddi', '🤸', true),
+  ('Tennis', 'tennis', '🎾', true),
+  ('Squash', 'squash', '🎾', true),
+  ('Taekwondo', 'taekwondo', '🥋', true),
+  ('Athletics', 'athletics', '🏃', true),
+  ('Swimming', 'swimming', '🏊', true),
+  ('Long Jump', 'long-jump', '🦘', true),
+  ('Powerlifting', 'powerlifting', '🏋️', true),
+  ('Discus Throw', 'discus-throw', '🥏', true),
+  ('Shot Put', 'shot-put', '🥊', true),
+  ('Chess', 'chess', '♟️', true),
+  ('Pool & Snooker', 'pool-snooker', '🎱', true)
 ON CONFLICT (slug) DO NOTHING;
 
 -- Insert sample teams data

@@ -72,6 +72,8 @@ CREATE TABLE fixtures (
     is_draw BOOLEAN DEFAULT false,
     summary TEXT, -- Brief match summary
     enable_live_scoring BOOLEAN DEFAULT true, -- Whether to use live scoring or direct results
+    pool VARCHAR(50), -- e.g., "Pool A", "Pool B"
+    college_name VARCHAR(150), -- College/Institution name
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT different_teams CHECK (team_a_id != team_b_id)

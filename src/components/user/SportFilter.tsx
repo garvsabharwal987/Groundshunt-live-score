@@ -12,7 +12,7 @@ interface SportFilterProps {
 
 export function SportFilter({ sports, activeSport, onSelect }: SportFilterProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+    <div className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-track]:dark:bg-slate-700 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:dark:bg-slate-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-gray-600">
       <button
         onClick={() => onSelect(null)}
         className={cn(
@@ -50,7 +50,7 @@ export function SportFilter({ sports, activeSport, onSelect }: SportFilterProps)
 
 export function SportNavPills({ sports }: { sports: Sport[] }) {
   return (
-    <div className="flex gap-2 overflow-x-auto py-3 scrollbar-hide">
+    <div className="flex gap-2 overflow-x-auto py-3 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-track]:dark:bg-slate-700 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:dark:bg-slate-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-gray-600">
       {sports.map((sport) => {
         const colors = getSportColorClasses(sport.slug);
         

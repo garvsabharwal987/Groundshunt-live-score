@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const status = url.searchParams.get('status');
+    const sportSlug = url.searchParams.get('sport');
 
     const supabase = await createServerSupabaseClient();
 
@@ -23,6 +24,20 @@ export async function GET(request: Request) {
 
     if (status && status !== 'all') {
       query = query.eq('status', status);
+    }
+
+    // Filter by sport slug if provided
+    if (sportSlug) {
+      // First get the sport ID by slug
+      const { data: sportData } = await supabase
+        .from('sports')
+        .select('id')
+        .eq('slug', sportSlug)
+        .single();
+      
+      if (sportData) {
+        query = query.eq('sport_id', sportData.id);
+      }
     }
 
     const { data: fixtures, error } = await query;

@@ -130,6 +130,8 @@ export interface Database {
           is_draw: boolean;
           summary: string | null;
           enable_live_scoring: boolean;
+          pool: string | null;
+          college_name: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -148,6 +150,8 @@ export interface Database {
           is_draw?: boolean;
           summary?: string | null;
           enable_live_scoring?: boolean;
+          pool?: string | null;
+          college_name?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -166,6 +170,8 @@ export interface Database {
           is_draw?: boolean;
           summary?: string | null;
           enable_live_scoring?: boolean;
+          pool?: string | null;
+          college_name?: string | null;
           created_at?: string;
           updated_at?: string;
         };

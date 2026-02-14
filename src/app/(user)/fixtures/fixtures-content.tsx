@@ -19,6 +19,7 @@ export function FixturesContent() {
   // Filters
   const [activeStatus, setActiveStatus] = useState(searchParams.get('status') || 'all');
   const [activeSport, setActiveSport] = useState<string | null>(searchParams.get('sport'));
+  const [activePool, setActivePool] = useState<string | null>(searchParams.get('pool'));
   const [selectedDate, setSelectedDate] = useState<string>(searchParams.get('date') || '');
 
   const fetchData = useCallback(async () => {
@@ -39,10 +40,13 @@ export function FixturesContent() {
       const fixturesData = await fixturesRes.json();
 
       if (Array.isArray(fixturesData)) {
-        // Filter by date if specified
+        // Filter by date and pool if specified
         let filtered = fixturesData;
         if (selectedDate) {
           filtered = filtered.filter((f: FixtureWithDetails) => f.match_date === selectedDate);
+        }
+        if (activePool) {
+          filtered = filtered.filter((f: FixtureWithDetails) => f.pool === activePool);
         }
         setFixtures(filtered);
       }
@@ -51,7 +55,7 @@ export function FixturesContent() {
     }
 
     setLoading(false);
-  }, [activeStatus, activeSport, selectedDate]);
+  }, [activeStatus, activeSport, activePool, selectedDate]);
 
   useEffect(() => {
     fetchData();
@@ -62,11 +66,12 @@ export function FixturesContent() {
     const params = new URLSearchParams();
     if (activeStatus !== 'all') params.set('status', activeStatus);
     if (activeSport) params.set('sport', activeSport);
+    if (activePool) params.set('pool', activePool);
     if (selectedDate) params.set('date', selectedDate);
     
     const newUrl = params.toString() ? `?${params.toString()}` : '/fixtures';
     router.replace(newUrl, { scroll: false });
-  }, [activeStatus, activeSport, selectedDate, router]);
+  }, [activeStatus, activeSport, activePool, selectedDate, router]);
 
   // Group fixtures by date
   const groupedFixtures = fixtures.reduce((acc, fixture) => {
@@ -94,7 +99,7 @@ export function FixturesContent() {
           onTabChange={setActiveStatus}
         />
 
-        {/* Sport Filter + Date */}
+        {/* Sport Filter + Pool Filter + Date */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <SportFilter
@@ -102,6 +107,21 @@ export function FixturesContent() {
               activeSport={activeSport}
               onSelect={setActiveSport}
             />
+          </div>
+
+          <div className="flex-1">
+            <select
+              value={activePool || ''}
+              onChange={(e) => setActivePool(e.target.value || null)}
+              className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+            >
+              <option value="">All Pools</option>
+              <option value="Pool A">Pool A</option>
+              <option value="Pool B">Pool B</option>
+              <option value="Pool C">Pool C</option>
+              <option value="Pool D">Pool D</option>
+              <option value="Pool E">Pool E</option>
+            </select>
           </div>
           
           <div className="flex items-center gap-2">

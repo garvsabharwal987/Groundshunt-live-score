@@ -65,7 +65,9 @@ export default function AdminFixturesPage() {
     return (
       fixture.team_a.name.toLowerCase().includes(query) ||
       fixture.team_b.name.toLowerCase().includes(query) ||
-      fixture.sport.name.toLowerCase().includes(query)
+      fixture.sport.name.toLowerCase().includes(query) ||
+      fixture.pool?.toLowerCase().includes(query) ||
+      fixture.college_name?.toLowerCase().includes(query)
     );
   });
 
@@ -119,7 +121,7 @@ export default function AdminFixturesPage() {
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Sport</th>
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Date & Time</th>
                 <th className="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-700">Round</th>
+                <th className="px-4 py-3 text-left font-semibold text-gray-700">Details</th>
                 <th className="px-4 py-3 text-center font-semibold text-gray-700">Live Scoring</th>
                 <th className="px-4 py-3 text-right font-semibold text-gray-700">Actions</th>
               </tr>
@@ -165,7 +167,14 @@ export default function AdminFixturesPage() {
                     <td className="px-4 py-4">
                       <StatusBadge status={fixture.status} />
                     </td>
-                    <td className="px-4 py-4 text-gray-600">{fixture.round || '-'}</td>
+                    <td className="px-4 py-4 text-sm text-gray-600">
+                      <div className="space-y-1">
+                        {fixture.round && <p className="font-medium">{fixture.round}</p>}
+                        {fixture.pool && <p className="text-xs">Pool: {fixture.pool}</p>}
+                        {fixture.college_name && <p className="text-xs">College: {fixture.college_name}</p>}
+                        {!fixture.round && !fixture.pool && !fixture.college_name && <p>-</p>}
+                      </div>
+                    </td>
                     <td className="px-4 py-4 text-center">
                       {fixture.enable_live_scoring ? (
                         <span className="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">

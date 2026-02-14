@@ -31,6 +31,8 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
     winner_id: fixture?.winner_id || '',
     is_draw: fixture?.is_draw || false,
     enable_live_scoring: fixture?.enable_live_scoring !== undefined ? fixture.enable_live_scoring : true,
+    pool: fixture?.pool || '',
+    college_name: fixture?.college_name || '',
   });
 
   useEffect(() => {
@@ -91,6 +93,8 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
       winner_id: formData.winner_id || null,
       is_draw: formData.is_draw,
       enable_live_scoring: formData.enable_live_scoring,
+      pool: formData.pool || null,
+      college_name: formData.college_name || null,
     };
 
     try {
@@ -239,6 +243,30 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
           value={formData.match_number}
           onChange={(e) => setFormData({ ...formData, match_number: e.target.value })}
         />
+
+        <div className="grid grid-cols-2 gap-4">
+          <Select
+            label="Pool"
+            options={[
+              { value: '', label: 'No Pool' },
+              { value: 'Pool A', label: 'Pool A' },
+              { value: 'Pool B', label: 'Pool B' },
+              { value: 'Pool C', label: 'Pool C' },
+              { value: 'Pool D', label: 'Pool D' },
+              { value: 'Pool E', label: 'Pool E' },
+            ]}
+            value={formData.pool}
+            onChange={(e) => setFormData({ ...formData, pool: e.target.value })}
+            placeholder="Select pool"
+          />
+
+          <Input
+            label="College Name"
+            placeholder="e.g., IIT Bombay"
+            value={formData.college_name}
+            onChange={(e) => setFormData({ ...formData, college_name: e.target.value })}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <Select
