@@ -62,6 +62,11 @@ export function MatchCard({ fixture, compact = false }: MatchCardProps) {
               )}>
                 {compact ? fixture.team_a.short_name : fixture.team_a.name}
               </p>
+              {fixture.team_a.college_name && !compact && (
+                <p className="text-xs text-gray-600 dark:text-slate-400">
+                  {fixture.team_a.college_name}
+                </p>
+              )}
               {(isLive || isCompleted) && (
                 <p className="font-mono font-bold text-xl text-gray-950 dark:text-orange-300">
                   {formatScore(teamAScore)}
@@ -103,6 +108,11 @@ export function MatchCard({ fixture, compact = false }: MatchCardProps) {
               )}>
                 {compact ? fixture.team_b.short_name : fixture.team_b.name}
               </p>
+              {fixture.team_b.college_name && !compact && (
+                <p className="text-xs text-gray-600 dark:text-slate-400">
+                  {fixture.team_b.college_name}
+                </p>
+              )}
               {(isLive || isCompleted) && (
                 <p className="font-mono font-bold text-xl text-gray-950 dark:text-orange-300">
                   {formatScore(teamBScore)}
@@ -182,11 +192,21 @@ export function MatchCardMini({ fixture }: { fixture: FixtureWithDetails }) {
         
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold truncate text-gray-950 dark:text-slate-50">{fixture.team_a.short_name}</span>
+            <div className="text-sm font-bold text-gray-950 dark:text-slate-50">
+              <div className="truncate">{fixture.team_a.short_name}</div>
+              {fixture.team_a.college_name && (
+                <div className="text-xs text-gray-500 dark:text-slate-400">{fixture.team_a.college_name}</div>
+              )}
+            </div>
             <span className="font-mono font-bold text-lg text-gray-950 dark:text-orange-300">{formatScore(teamAScore)}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold truncate text-gray-950 dark:text-slate-50">{fixture.team_b.short_name}</span>
+            <div className="text-sm font-bold text-gray-950 dark:text-slate-50">
+              <div className="truncate">{fixture.team_b.short_name}</div>
+              {fixture.team_b.college_name && (
+                <div className="text-xs text-gray-500 dark:text-slate-400">{fixture.team_b.college_name}</div>
+              )}
+            </div>
             <span className="font-mono font-bold text-lg text-gray-950 dark:text-orange-300">{formatScore(teamBScore)}</span>
           </div>
         </div>

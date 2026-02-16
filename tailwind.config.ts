@@ -12,7 +12,17 @@ const config: Config = {
       colors: {
         // Brand Colors (Groundshunt theme)
         primary: {
-          DEFAULT: '#1A2238', // nav, buttons, accents
+          50: '#f5f6fa',
+          100: '#ebecf5',
+          200: '#c3c9f9',
+          300: '#9baaf2',
+          400: '#6b7ad7',
+          500: '#4a5cc7',
+          600: '#3a4db8',
+          700: '#2e3f99',
+          800: '#1A2238', // nav, buttons, accents
+          900: '#111624',
+          DEFAULT: '#1A2238',
           dark: '#111624',
           light: '#232B47',
         },

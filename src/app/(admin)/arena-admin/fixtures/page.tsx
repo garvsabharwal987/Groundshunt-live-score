@@ -146,9 +146,19 @@ export default function AdminFixturesPage() {
                         >
                           {fixture.team_a.short_name.charAt(0)}
                         </span>
-                        <span className="font-medium">
-                          {fixture.team_a.short_name} vs {fixture.team_b.short_name}
-                        </span>
+                        <div className="text-sm">
+                          <div className="font-medium">
+                            {fixture.team_a.short_name} vs {fixture.team_b.short_name}
+                          </div>
+                          {(fixture.team_a.college_name || fixture.team_b.college_name) && (
+                            <div className="text-xs text-gray-500">
+                              {fixture.team_a.college_name && fixture.team_b.college_name 
+                                ? `${fixture.team_a.college_name} vs ${fixture.team_b.college_name}`
+                                : fixture.team_a.college_name || fixture.team_b.college_name
+                              }
+                            </div>
+                          )}
+                        </div>
                         <span
                           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
                           style={{ backgroundColor: fixture.team_b.color_primary || '#6b7280' }}

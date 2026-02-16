@@ -53,10 +53,10 @@ export interface Database {
           name: string;
           short_name: string;
           logo_url: string | null;
+          college_name: string | null;
           sport_id: string;
           color_primary: string;
           color_secondary: string;
-          is_active: boolean;
           created_at: string;
           updated_at: string;
         };
@@ -65,10 +65,10 @@ export interface Database {
           name: string;
           short_name: string;
           logo_url?: string | null;
+          college_name?: string | null;
           sport_id: string;
           color_primary?: string;
           color_secondary?: string;
-          is_active?: boolean;
           created_at?: string;
           updated_at?: string;
         };
@@ -77,10 +77,10 @@ export interface Database {
           name?: string;
           short_name?: string;
           logo_url?: string | null;
+          college_name?: string | null;
           sport_id?: string;
           color_primary?: string;
           color_secondary?: string;
-          is_active?: boolean;
           created_at?: string;
           updated_at?: string;
         };

@@ -146,6 +146,9 @@ export default function MatchDetailPage() {
                 {fixture.team_a.name}
               </h3>
               <p className="text-sm text-black dark:text-white font-bold">{fixture.team_a.short_name}</p>
+              {fixture.team_a.college_name && (
+                <p className="text-xs text-gray-600 dark:text-gray-400">{fixture.team_a.college_name}</p>
+              )}
               
               {(isLive || isCompleted) && (
                 <div className="mt-4">
@@ -208,6 +211,9 @@ export default function MatchDetailPage() {
                 {fixture.team_b.name}
               </h3>
               <p className="text-sm text-black dark:text-white font-bold">{fixture.team_b.short_name}</p>
+              {fixture.team_b.college_name && (
+                <p className="text-xs text-gray-600 dark:text-gray-400">{fixture.team_b.college_name}</p>
+              )}
               
               {(isLive || isCompleted) && (
                 <div className="mt-4">
@@ -247,6 +253,8 @@ export default function MatchDetailPage() {
           teamBScore={teamBScore}
           teamAColor={fixture.team_a.color_primary}
           teamBColor={fixture.team_b.color_primary}
+          teamACollege={fixture.team_a.college_name || undefined}
+          teamBCollege={fixture.team_b.college_name || undefined}
         />
       )}
 

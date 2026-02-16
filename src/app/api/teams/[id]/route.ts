@@ -26,3 +26,30 @@ export async function DELETE(
 
   return NextResponse.json({ success: true });
 }
+
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const supabase = await createServerSupabaseClient();
+
+  const { id } = params;
+  if (!id) {
+    return NextResponse.json({ error: 'Missing team id' }, { status: 400 });
+  }
+
+  const body = await request.json();
+
+  const { data, error } = await supabase
+    .from('teams')
+    .update(body)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data);
+}

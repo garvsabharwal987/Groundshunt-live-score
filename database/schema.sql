@@ -30,6 +30,7 @@ CREATE TABLE teams (
     name VARCHAR(100) NOT NULL,
     short_name VARCHAR(10) NOT NULL,
     logo_url TEXT,
+    college_name TEXT,
     sport_id UUID NOT NULL REFERENCES sports(id) ON DELETE CASCADE,
     color_primary VARCHAR(7) DEFAULT '#000000',
     color_secondary VARCHAR(7) DEFAULT '#FFFFFF',

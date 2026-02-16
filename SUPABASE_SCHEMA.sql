@@ -21,9 +21,10 @@ CREATE TABLE IF NOT EXISTS teams (
   name TEXT NOT NULL,
   short_name TEXT NOT NULL,
   sport_id UUID NOT NULL REFERENCES sports(id) ON DELETE CASCADE,
-  primary_color TEXT,
-  secondary_color TEXT,
+  color_primary TEXT DEFAULT '#000000',
+  color_secondary TEXT DEFAULT '#FFFFFF',
   logo_url TEXT,
+  college_name TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   UNIQUE(sport_id, name)

@@ -13,6 +13,8 @@ interface SetsTableProps {
   teamBScore: Record<string, number>;
   teamAColor?: string;
   teamBColor?: string;
+  teamACollege?: string;
+  teamBCollege?: string;
 }
 
 export function SetsTable({
@@ -25,6 +27,8 @@ export function SetsTable({
   teamBScore,
   teamAColor = '#6b7280',
   teamBColor = '#6b7280',
+  teamACollege,
+  teamBCollege,
 }: SetsTableProps) {
   const sportConfig = SPORTS_CONFIG[sport as keyof typeof SPORTS_CONFIG];
 
@@ -84,6 +88,9 @@ export function SetsTable({
                       {teamAName}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-slate-400">{teamAShort}</p>
+                    {teamACollege && (
+                      <p className="text-xs text-gray-500 dark:text-slate-400">{teamACollege}</p>
+                    )}
                   </div>
                 </div>
               </td>
@@ -119,6 +126,9 @@ export function SetsTable({
                       {teamBName}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-slate-400">{teamBShort}</p>
+                    {teamBCollege && (
+                      <p className="text-xs text-gray-500 dark:text-slate-400">{teamBCollege}</p>
+                    )}
                   </div>
                 </div>
               </td>

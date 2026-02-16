@@ -35,6 +35,16 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
     college_name: fixture?.college_name || '',
   });
 
+  const [teamFormData, setTeamFormData] = useState({
+    sport_id: '',
+    team_name: '',
+    short_name: '',
+    primary_color: '#000000',
+    secondary_color: '#FFFFFF',
+    logo_url: '',
+    college_name: '',
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,11 +75,20 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
       }
 
       try {
+        console.log('Fetching teams for sport:', formData.sport_id);
         const res = await fetch(`/api/teams?sport_id=${formData.sport_id}`);
         const data = await res.json();
-        if (Array.isArray(data)) setTeams(data);
+        console.log('Teams response:', data);
+        if (Array.isArray(data)) {
+          setTeams(data);
+          console.log('Teams set:', data.length, 'teams found');
+        } else {
+          console.warn('Teams response is not an array:', data);
+          setTeams([]);
+        }
       } catch (error) {
         console.error('Error fetching teams:', error);
+        setTeams([]);
       }
     };
 
@@ -343,6 +362,7 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
   const [formData, setFormData] = useState({
     name: team?.name || '',
     short_name: team?.short_name || '',
+    college_name: team?.college_name || '',
     sport_id: team?.sport_id || '',
     color_primary: team?.color_primary || '#000000',
     color_secondary: team?.color_secondary || '#FFFFFF',
@@ -424,6 +444,13 @@ export function TeamForm({ team, onClose, onSave }: TeamFormProps) {
           placeholder="e.g., MI"
           maxLength={10}
           required
+        />
+
+        <Input
+          label="College Name (optional)"
+          value={formData.college_name || ''}
+          onChange={(e) => setFormData({ ...formData, college_name: e.target.value })}
+          placeholder="e.g., IIT Delhi, DU"
         />
 
         <div className="grid grid-cols-2 gap-4">

@@ -78,9 +78,16 @@ export function PointsTable({ standings, sportSlug, sportName, compact = false }
                     >
                       {entry.team?.short_name?.charAt(0) || 'T'}
                     </div>
-                    <span className="font-medium text-gray-900 dark:text-slate-100">
-                      {compact ? entry.team?.short_name : entry.team?.name}
-                    </span>
+                    <div>
+                      <span className="font-medium text-gray-900 dark:text-slate-100 block">
+                        {compact ? entry.team?.short_name : entry.team?.name}
+                      </span>
+                      {entry.team?.college_name && !compact && (
+                        <span className="text-xs text-gray-600 dark:text-slate-400">
+                          {entry.team.college_name}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </td>
                 <td className="px-4 py-3 text-center text-gray-600 dark:text-slate-400">{entry.played}</td>
