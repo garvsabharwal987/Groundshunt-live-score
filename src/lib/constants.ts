@@ -83,6 +83,44 @@ export const SPORTS_CONFIG = {
     displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
     description: 'Best of 5 sets, first to 25 points',
   },
+  cricket: {
+    name: 'Cricket',
+    icon: 'Circle',
+    color: '#059669',
+    scoreFields: [
+      { key: 'runs', label: 'Runs', type: 'points' },
+      { key: 'wickets', label: 'Wickets', type: 'points' },
+      { key: 'overs', label: 'Overs', type: 'stats' },
+    ],
+    displayFormat: (score: { runs?: number, wickets?: number }) => 
+      `${score.runs || 0}/${score.wickets || 0}`,
+    description: 'T20 format cricket scoring',
+  },
+  kabaddi: {
+    name: 'Kabaddi',
+    icon: 'Circle',
+    color: '#b91c1c',
+    scoreFields: [
+      { key: 'points', label: 'Points', type: 'points' },
+      { key: 'raids', label: 'Raids', type: 'stats' },
+      { key: 'tackles', label: 'Tackles', type: 'stats' },
+    ],
+    displayFormat: (score: { points?: number }) => `${score.points || 0}`,
+    description: 'Professional Kabaddi league format',
+  },
+  tennis: {
+    name: 'Tennis',
+    icon: 'Circle',
+    color: '#daa520',
+    scoreFields: [
+      { key: 'set1', label: 'Set 1', type: 'points' },
+      { key: 'set2', label: 'Set 2', type: 'points' },
+      { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'sets_won', label: 'Sets Won', type: 'summary' },
+    ],
+    displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
+    description: 'Best of 3 sets, first to 6 games',
+  },
 } as const;
 
 // Match statuses

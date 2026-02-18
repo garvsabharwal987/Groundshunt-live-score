@@ -126,9 +126,9 @@ export default function LiveScoringPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Fixtures List */}
-        <div className="lg:col-span-1 space-y-4">
+        <div className="lg:col-span-2 space-y-4">
           {/* Live Matches */}
           {liveFixtures.length > 0 && (
             <div>
@@ -170,7 +170,7 @@ export default function LiveScoringPage() {
               <h2 className="text-sm font-semibold text-blue-600 mb-2">
                 Upcoming ({upcomingFixtures.length})
               </h2>
-              <div className="space-y-2 max-h-96 overflow-y-auto">
+              <div className="space-y-2 max-h-[700px] overflow-y-auto">
                 {upcomingFixtures.map((fixture) => (
                   <div
                     key={fixture.id}
@@ -239,7 +239,7 @@ export default function LiveScoringPage() {
               <h2 className="text-sm font-semibold text-green-600 mb-2">
                 Completed ({completedFixtures.length})
               </h2>
-              <div className="space-y-2 max-h-96 overflow-y-auto">
+              <div className="space-y-2 max-h-[700px] overflow-y-auto">
                 {completedFixtures.map((fixture) => (
                   <button
                     key={fixture.id}
