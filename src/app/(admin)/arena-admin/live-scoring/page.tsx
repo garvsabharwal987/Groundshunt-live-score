@@ -170,8 +170,8 @@ export default function LiveScoringPage() {
               <h2 className="text-sm font-semibold text-blue-600 mb-2">
                 Upcoming ({upcomingFixtures.length})
               </h2>
-              <div className="space-y-2">
-                {upcomingFixtures.slice(0, 10).map((fixture) => (
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                {upcomingFixtures.map((fixture) => (
                   <div
                     key={fixture.id}
                     className="p-3 bg-white rounded-lg border border-gray-200"
@@ -239,8 +239,8 @@ export default function LiveScoringPage() {
               <h2 className="text-sm font-semibold text-green-600 mb-2">
                 Completed ({completedFixtures.length})
               </h2>
-              <div className="space-y-2">
-                {completedFixtures.slice(0, 10).map((fixture) => (
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                {completedFixtures.map((fixture) => (
                   <button
                     key={fixture.id}
                     onClick={() => setSelectedFixture(fixture)}
