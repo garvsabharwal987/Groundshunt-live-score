@@ -11,8 +11,8 @@ import type { User } from '@/lib/database.types';
 
 // Hardcoded admin credentials for development
 const HARDCODED_ADMIN = {
-  email: 'prabhdeep1701@gmail.com',
-  password: '1234',
+  email: 'adminshunt@gmail.com',
+  password: 'bennett.admin@groundshunt1919',
 };
 
 export default function AdminLoginPage() {
