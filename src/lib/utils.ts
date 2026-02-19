@@ -51,10 +51,11 @@ export function getSportColor(sportSlug: string): string {
   return colors[sportSlug] || 'bg-primary-500';
 }
 
-// Helper function to extract base sport name from slug (e.g., 'badminton-girls' -> 'badminton')
+// Helper function to extract base sport name from slug (e.g., 'table-tennis-boys' -> 'tabletennis')
 export function getBaseSportSlug(slug: string): string {
   // Remove gender suffixes like -boys, -girls, -men, -women
-  return slug.replace(/-(boys|girls|men|women)$/i, '');
+  // Then remove all hyphens to match SPORTS_CONFIG keys
+  return slug.replace(/-(boys|girls|men|women)$/i, '').replace(/-/g, '');
 }
 
 export function getSportColorClasses(sportSlug: string): {
