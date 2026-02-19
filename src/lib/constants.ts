@@ -23,11 +23,13 @@ export const SPORTS_CONFIG = {
       { key: 'set1', label: 'Set 1', type: 'points' },
       { key: 'set2', label: 'Set 2', type: 'points' },
       { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'set4', label: 'Set 4', type: 'points' },
+      { key: 'set5', label: 'Set 5', type: 'points' },
       { key: 'sets_won', label: 'Sets Won', type: 'summary' },
     ],
-    displayFormat: (score: { sets_won?: number }) => 
-      `${score.sets_won || 0} sets`,
-    description: 'Best of 3 sets, first to 11 points',
+    displayFormat: (score: { set1?: number; set2?: number; set3?: number; set4?: number; set5?: number }) => 
+      `${score.set1 || 0}-${score.set2 || 0}-${score.set3 || 0}-${score.set4 || 0}-${score.set5 || 0}`,
+    description: 'Best of 5 sets, first to 11 points',
   },
   football: {
     name: 'Football',
@@ -65,7 +67,8 @@ export const SPORTS_CONFIG = {
       { key: 'set3', label: 'Set 3', type: 'points' },
       { key: 'sets_won', label: 'Sets Won', type: 'summary' },
     ],
-    displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
+    displayFormat: (score: { set1?: number; set2?: number; set3?: number }) => 
+      `${score.set1 || 0}-${score.set2 || 0}-${score.set3 || 0}`,
     description: 'Best of 3 sets, first to 21 points',
   },
   volleyball: {
@@ -80,7 +83,8 @@ export const SPORTS_CONFIG = {
       { key: 'set5', label: 'Set 5', type: 'points' },
       { key: 'sets_won', label: 'Sets Won', type: 'summary' },
     ],
-    displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
+    displayFormat: (score: { set1?: number; set2?: number; set3?: number; set4?: number; set5?: number }) => 
+      `${score.set1 || 0}-${score.set2 || 0}-${score.set3 || 0}-${score.set4 || 0}-${score.set5 || 0}`,
     description: 'Best of 5 sets, first to 25 points',
   },
   cricket: {
@@ -120,6 +124,19 @@ export const SPORTS_CONFIG = {
     ],
     displayFormat: (score: { sets_won?: number }) => `${score.sets_won || 0} sets`,
     description: 'Best of 3 sets, first to 6 games',
+  },
+  chess: {
+    name: 'Chess',
+    icon: 'Circle',
+    color: '#1f2937',
+    scoreFields: [
+      { key: 'wins', label: 'Wins', type: 'points' },
+      { key: 'losses', label: 'Losses', type: 'points' },
+      { key: 'draws', label: 'Draws', type: 'points' },
+      { key: 'total_points', label: 'Total Points', type: 'summary' },
+    ],
+    displayFormat: (score: { total_points?: number }) => `${score.total_points || 0} pts`,
+    description: 'Chess tournament scoring',
   },
 } as const;
 

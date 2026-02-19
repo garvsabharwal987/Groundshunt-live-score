@@ -54,8 +54,9 @@ export function getSportColor(sportSlug: string): string {
 // Helper function to extract base sport name from slug (e.g., 'table-tennis-boys' -> 'tabletennis')
 export function getBaseSportSlug(slug: string): string {
   // Remove gender suffixes like -boys, -girls, -men, -women
+  // Also remove match type suffixes like -singles, -doubles
   // Then remove all hyphens to match SPORTS_CONFIG keys
-  return slug.replace(/-(boys|girls|men|women)$/i, '').replace(/-/g, '');
+  return slug.replace(/-(boys|girls|men|women|singles|doubles)/gi, '').replace(/-/g, '');
 }
 
 export function getSportColorClasses(sportSlug: string): {
@@ -89,6 +90,21 @@ export function getSportColorClasses(sportSlug: string): {
       bg: 'bg-volleyball/10',
       text: 'text-volleyball',
       border: 'border-volleyball',
+    },
+    chess: {
+      bg: 'bg-gray-100',
+      text: 'text-gray-800',
+      border: 'border-gray-800',
+    },
+    cricket: {
+      bg: 'bg-emerald-100',
+      text: 'text-emerald-700',
+      border: 'border-emerald-700',
+    },
+    tennis: {
+      bg: 'bg-yellow-100',
+      text: 'text-yellow-700',
+      border: 'border-yellow-700',
     },
   };
   return colors[baseSportSlug] || { bg: 'bg-primary-100', text: 'text-primary-600', border: 'border-primary-500' };

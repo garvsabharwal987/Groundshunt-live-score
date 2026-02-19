@@ -176,31 +176,37 @@ export function LiveScoreEditor({ fixture, onUpdate }: LiveScoreEditorProps) {
           </div>
         )}
 
-        {/* Match Info */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <Input
-            label="Current Period"
-            value={currentPeriod}
-            onChange={(e) => setCurrentPeriod(e.target.value)}
-            placeholder="e.g., 1st Innings, 2nd Half"
-          />
-          <Input
-            label="Elapsed Time"
-            value={elapsedTime}
-            onChange={(e) => setElapsedTime(e.target.value)}
-            placeholder="e.g., 45:00, 15.3 overs"
-          />
-        </div>
+        {/* Match Info - Only for sports that use time tracking */}
+        {(['football', 'basketball', 'cricket'].includes(baseSportSlug) || 
+          sportSlug.includes('football') || sportSlug.includes('basketball') || sportSlug.includes('cricket')) && (
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <Input
+              label="Current Period"
+              value={currentPeriod}
+              onChange={(e) => setCurrentPeriod(e.target.value)}
+              placeholder="e.g., 2nd Half, Q3"
+            />
+            <Input
+              label="Elapsed Time"
+              value={elapsedTime}
+              onChange={(e) => setElapsedTime(e.target.value)}
+              placeholder="e.g., 45:00, 24:30"
+            />
+          </div>
+        )}
 
-        {/* Last Event */}
-        <div className="mb-6">
-          <Input
-            label="Last Event"
-            value={lastEvent}
-            onChange={(e) => setLastEvent(e.target.value)}
-            placeholder="e.g., GOAL! Player X scores from 20 yards"
-          />
-        </div>
+        {/* Last Event - Optional for all sports */}
+        {(['football', 'basketball', 'cricket', 'volleyball'].includes(baseSportSlug) ||
+          sportSlug.includes('football') || sportSlug.includes('basketball') || sportSlug.includes('cricket') || sportSlug.includes('volleyball')) && (
+          <div className="mb-6">
+            <Input
+              label="Last Event"
+              value={lastEvent}
+              onChange={(e) => setLastEvent(e.target.value)}
+              placeholder="e.g., GOAL! Player X scores"
+            />
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex justify-end gap-3">
