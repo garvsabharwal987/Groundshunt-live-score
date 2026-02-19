@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button, Input, Card } from '@/components/ui';
-import { cn, getSportColorClasses } from '@/lib/utils';
+import { cn, getSportColorClasses, getBaseSportSlug } from '@/lib/utils';
 import { SPORTS_CONFIG } from '@/lib/constants';
 import { Save, RefreshCw, Plus, Minus } from 'lucide-react';
 import type { FixtureWithDetails } from '@/lib/database.types';
@@ -18,7 +18,8 @@ export function FinalScoreInput({ fixture, onUpdate }: FinalScoreInputProps) {
   const [teamBScore, setTeamBScore] = useState<Record<string, number>>({});
 
   const sportSlug = fixture.sport?.slug?.toLowerCase() || '';
-  const sportConfig = SPORTS_CONFIG[sportSlug as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(sportSlug) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
   const sportColors = getSportColorClasses(sportSlug);
 
   useEffect(() => {

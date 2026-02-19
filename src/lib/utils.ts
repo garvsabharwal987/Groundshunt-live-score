@@ -51,11 +51,18 @@ export function getSportColor(sportSlug: string): string {
   return colors[sportSlug] || 'bg-primary-500';
 }
 
+// Helper function to extract base sport name from slug (e.g., 'badminton-girls' -> 'badminton')
+export function getBaseSportSlug(slug: string): string {
+  // Remove gender suffixes like -boys, -girls, -men, -women
+  return slug.replace(/-(boys|girls|men|women)$/i, '');
+}
+
 export function getSportColorClasses(sportSlug: string): {
   bg: string;
   text: string;
   border: string;
 } {
+  const baseSportSlug = getBaseSportSlug(sportSlug);
   const colors: Record<string, { bg: string; text: string; border: string }> = {
     tabletennis: {
       bg: 'bg-tabletennis/10',
@@ -83,7 +90,7 @@ export function getSportColorClasses(sportSlug: string): {
       border: 'border-volleyball',
     },
   };
-  return colors[sportSlug] || { bg: 'bg-primary-100', text: 'text-primary-600', border: 'border-primary-500' };
+  return colors[baseSportSlug] || { bg: 'bg-primary-100', text: 'text-primary-600', border: 'border-primary-500' };
 }
 
 export function getStatusColor(status: string): string {

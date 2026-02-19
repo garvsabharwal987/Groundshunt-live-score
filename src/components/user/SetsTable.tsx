@@ -2,6 +2,7 @@
 
 import { Card } from '@/components/ui';
 import { SPORTS_CONFIG } from '@/lib/constants';
+import { getBaseSportSlug } from '@/lib/utils';
 
 interface SetsTableProps {
   sport: string;
@@ -30,7 +31,8 @@ export function SetsTable({
   teamACollege,
   teamBCollege,
 }: SetsTableProps) {
-  const sportConfig = SPORTS_CONFIG[sport as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(sport) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
 
   // Get set fields for this sport (excluding summary fields)
   const fields = sportConfig?.scoreFields.filter((field: any) => 

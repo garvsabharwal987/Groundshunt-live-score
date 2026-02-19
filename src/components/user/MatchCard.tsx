@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { StatusBadge } from '@/components/ui';
-import { cn, formatTime, getSportColorClasses } from '@/lib/utils';
+import { cn, formatTime, getSportColorClasses, getBaseSportSlug } from '@/lib/utils';
 import { SPORTS_CONFIG } from '@/lib/constants';
 import type { FixtureWithDetails } from '@/lib/database.types';
 
@@ -12,7 +12,8 @@ interface MatchCardProps {
 }
 
 export function MatchCard({ fixture, compact = false }: MatchCardProps) {
-  const sportConfig = SPORTS_CONFIG[fixture.sport.slug as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(fixture.sport.slug) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
   const sportColors = getSportColorClasses(fixture.sport.slug);
   
   const teamAScore = fixture.live_score?.team_a_score as Record<string, number> || {};
@@ -162,7 +163,8 @@ export function MatchCard({ fixture, compact = false }: MatchCardProps) {
 export function MatchCardMini({ fixture }: { fixture: FixtureWithDetails }) {
   const teamAScore = fixture.live_score?.team_a_score as Record<string, number> || {};
   const teamBScore = fixture.live_score?.team_b_score as Record<string, number> || {};
-  const sportConfig = SPORTS_CONFIG[fixture.sport.slug as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(fixture.sport.slug) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
   
   const formatScore = (score: Record<string, number>) => {
     if (!sportConfig) return '-';

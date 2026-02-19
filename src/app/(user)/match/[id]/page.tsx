@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { StatusBadge, Card } from '@/components/ui';
-import { cn, formatDate, formatTime, getSportColorClasses } from '@/lib/utils';
+import { cn, formatDate, formatTime, getSportColorClasses, getBaseSportSlug } from '@/lib/utils';
 import { SPORTS_CONFIG } from '@/lib/constants';
 import { ArrowLeft, MapPin, Clock, RefreshCw } from 'lucide-react';
 import { SetsTable } from '@/components/user';
@@ -77,7 +77,8 @@ export default function MatchDetailPage() {
     );
   }
 
-  const sportConfig = SPORTS_CONFIG[fixture.sport.slug as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(fixture.sport.slug) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
   const sportColors = getSportColorClasses(fixture.sport.slug);
   const teamAScore = fixture.live_score?.team_a_score as Record<string, number> || {};
   const teamBScore = fixture.live_score?.team_b_score as Record<string, number> || {};

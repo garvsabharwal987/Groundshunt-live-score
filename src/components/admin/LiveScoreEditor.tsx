@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button, Input, Card } from '@/components/ui';
-import { cn, getSportColorClasses } from '@/lib/utils';
+import { cn, getSportColorClasses, getBaseSportSlug } from '@/lib/utils';
 import { SPORTS_CONFIG } from '@/lib/constants';
 import { Save, RefreshCw, Plus, Minus, Radio } from 'lucide-react';
 import type { FixtureWithDetails, LiveScore } from '@/lib/database.types';
@@ -21,7 +21,8 @@ export function LiveScoreEditor({ fixture, onUpdate }: LiveScoreEditorProps) {
   const [lastEvent, setLastEvent] = useState('');
 
   const sportSlug = fixture.sport?.slug || '';
-  const sportConfig = SPORTS_CONFIG[sportSlug as keyof typeof SPORTS_CONFIG];
+  const baseSportSlug = getBaseSportSlug(sportSlug) as keyof typeof SPORTS_CONFIG;
+  const sportConfig = SPORTS_CONFIG[baseSportSlug];
   const sportColors = getSportColorClasses(sportSlug);
 
   useEffect(() => {
@@ -223,6 +224,8 @@ interface QuickScoreButtonsProps {
 }
 
 export function QuickScoreButtons({ sportSlug, onQuickScore }: QuickScoreButtonsProps) {
+  const baseSportSlug = getBaseSportSlug(sportSlug);
+  
   const quickActions: Record<string, { label: string; actions: { name: string; field: string; value: number }[] }> = {
     tabletennis: {
       label: 'Table Tennis',
@@ -261,7 +264,7 @@ export function QuickScoreButtons({ sportSlug, onQuickScore }: QuickScoreButtons
     },
   };
 
-  const config = quickActions[sportSlug];
+  const config = quickActions[baseSportSlug];
   if (!config) return null;
 
   return (

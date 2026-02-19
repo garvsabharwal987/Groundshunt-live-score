@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button, Input, Select, Modal } from '@/components/ui';
 import { X, Plus, Trash2, AlertCircle } from 'lucide-react';
 import { SPORTS_CONFIG } from '@/lib/constants';
+import { getBaseSportSlug } from '@/lib/utils';
 import type { Sport, Team, Venue, Fixture } from '@/lib/database.types';
 
 interface FixtureFormProps {
@@ -161,7 +162,8 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
         {/* Sport Scoring Rules */}
         {formData.sport_id && sports.length > 0 && (() => {
           const selectedSport = sports.find(s => s.id === formData.sport_id);
-          const sportConfig = selectedSport ? SPORTS_CONFIG[selectedSport.slug as keyof typeof SPORTS_CONFIG] : null;
+          const baseSportSlug = selectedSport ? getBaseSportSlug(selectedSport.slug) : '';
+          const sportConfig = selectedSport ? SPORTS_CONFIG[baseSportSlug as keyof typeof SPORTS_CONFIG] : null;
           return sportConfig ? (
             <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
               <div className="flex gap-3">
