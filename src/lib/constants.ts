@@ -138,6 +138,22 @@ export const SPORTS_CONFIG = {
     displayFormat: (score: { total_points?: number }) => `${score.total_points || 0} pts`,
     description: 'Chess tournament scoring',
   },
+  squash: {
+    name: 'Squash',
+    icon: 'Circle',
+    color: '#10b981',
+    scoreFields: [
+      { key: 'set1', label: 'Set 1', type: 'points' },
+      { key: 'set2', label: 'Set 2', type: 'points' },
+      { key: 'set3', label: 'Set 3', type: 'points' },
+      { key: 'set4', label: 'Set 4', type: 'points' },
+      { key: 'set5', label: 'Set 5', type: 'points' },
+      { key: 'sets_won', label: 'Sets Won', type: 'summary' },
+    ],
+    displayFormat: (score: { set1?: number; set2?: number; set3?: number; set4?: number; set5?: number }) => 
+      `${score.set1 || 0}-${score.set2 || 0}-${score.set3 || 0}-${score.set4 || 0}-${score.set5 || 0}`,
+    description: 'Best of 5 sets, first to 11 points',
+  },
 } as const;
 
 // Match statuses

@@ -106,6 +106,11 @@ export function getSportColorClasses(sportSlug: string): {
       text: 'text-yellow-700',
       border: 'border-yellow-700',
     },
+    squash: {
+      bg: 'bg-emerald-100',
+      text: 'text-emerald-700',
+      border: 'border-emerald-700',
+    },
   };
   return colors[baseSportSlug] || { bg: 'bg-primary-100', text: 'text-primary-600', border: 'border-primary-500' };
 }
