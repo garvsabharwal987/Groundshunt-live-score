@@ -111,6 +111,11 @@ export function getSportColorClasses(sportSlug: string): {
       text: 'text-emerald-700',
       border: 'border-emerald-700',
     },
+    poolsnooker: {
+      bg: 'bg-indigo-100',
+      text: 'text-indigo-700',
+      border: 'border-indigo-700',
+    },
   };
   return colors[baseSportSlug] || { bg: 'bg-primary-100', text: 'text-primary-600', border: 'border-primary-500' };
 }

@@ -180,9 +180,10 @@ export default function AdminFixturesPage() {
                     <td className="px-4 py-4 text-sm text-gray-600">
                       <div className="space-y-1">
                         {fixture.round && <p className="font-medium">{fixture.round}</p>}
+                        {fixture.table_number && <p className="text-xs">Table: {fixture.table_number}</p>}
                         {fixture.pool && <p className="text-xs">Pool: {fixture.pool}</p>}
                         {fixture.college_name && <p className="text-xs">College: {fixture.college_name}</p>}
-                        {!fixture.round && !fixture.pool && !fixture.college_name && <p>-</p>}
+                        {!fixture.round && !fixture.table_number && !fixture.pool && !fixture.college_name && <p>-</p>}
                       </div>
                     </td>
                     <td className="px-4 py-4 text-center">

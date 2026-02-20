@@ -132,6 +132,7 @@ export interface Database {
           enable_live_scoring: boolean;
           pool: string | null;
           college_name: string | null;
+          table_number: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -152,6 +153,7 @@ export interface Database {
           enable_live_scoring?: boolean;
           pool?: string | null;
           college_name?: string | null;
+          table_number?: number | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -172,6 +174,7 @@ export interface Database {
           enable_live_scoring?: boolean;
           pool?: string | null;
           college_name?: string | null;
+          table_number?: number | null;
           created_at?: string;
           updated_at?: string;
         };

@@ -154,6 +154,22 @@ export const SPORTS_CONFIG = {
       `${score.set1 || 0}-${score.set2 || 0}-${score.set3 || 0}-${score.set4 || 0}-${score.set5 || 0}`,
     description: 'Best of 5 sets, first to 11 points',
   },
+  poolsnooker: {
+    name: 'Pool & Snooker',
+    icon: 'Circle',
+    color: '#4f46e5',
+    scoreFields: [
+      { key: 'frame1', label: 'Frame 1', type: 'points' },
+      { key: 'frame2', label: 'Frame 2', type: 'points' },
+      { key: 'frame3', label: 'Frame 3', type: 'points' },
+      { key: 'frame4', label: 'Frame 4', type: 'points' },
+      { key: 'frame5', label: 'Frame 5', type: 'points' },
+      { key: 'frames_won', label: 'Frames Won', type: 'summary' },
+    ],
+    displayFormat: (score: { frame1?: number; frame2?: number; frame3?: number; frame4?: number; frame5?: number }) => 
+      `${score.frame1 || 0}-${score.frame2 || 0}-${score.frame3 || 0}-${score.frame4 || 0}-${score.frame5 || 0}`,
+    description: 'Best of 5 frames',
+  },
 } as const;
 
 // Match statuses

@@ -277,6 +277,12 @@ export default function MatchDetailPage() {
                 <span className="text-black dark:text-white font-bold">{fixture.venue.name}</span>
               </div>
             )}
+            {fixture.table_number && (
+              <div className="flex items-center gap-3 text-sm">
+                <span className="text-gray-900 dark:text-white font-bold">🏓</span>
+                <span className="text-black dark:text-white font-bold">Table {fixture.table_number}</span>
+              </div>
+            )}
             {fixture.pool && (
               <div className="flex items-center gap-3 text-sm">
                 <span className="text-gray-900 dark:text-white font-bold">🏆</span>

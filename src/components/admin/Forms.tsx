@@ -34,6 +34,7 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
     enable_live_scoring: fixture?.enable_live_scoring !== undefined ? fixture.enable_live_scoring : true,
     pool: fixture?.pool || '',
     college_name: fixture?.college_name || '',
+    table_number: fixture?.table_number?.toString() || '',
   });
 
   const [teamFormData, setTeamFormData] = useState({
@@ -115,6 +116,7 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
       enable_live_scoring: formData.enable_live_scoring,
       pool: formData.pool || null,
       college_name: formData.college_name || null,
+      table_number: formData.table_number ? parseInt(formData.table_number) : null,
     };
 
     try {
@@ -275,6 +277,9 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
               { value: 'Pool C', label: 'Pool C' },
               { value: 'Pool D', label: 'Pool D' },
               { value: 'Pool E', label: 'Pool E' },
+              { value: 'Day 1', label: 'Day 1' },
+              { value: 'Day 2', label: 'Day 2' },
+              { value: 'Day 3', label: 'Day 3' },
             ]}
             value={formData.pool}
             onChange={(e) => setFormData({ ...formData, pool: e.target.value })}
@@ -282,12 +287,21 @@ export function FixtureForm({ fixture, onClose, onSave }: FixtureFormProps) {
           />
 
           <Input
-            label="College Name"
-            placeholder="e.g., IIT Bombay"
-            value={formData.college_name}
-            onChange={(e) => setFormData({ ...formData, college_name: e.target.value })}
+            label="Table Number"
+            type="number"
+            placeholder="e.g., 1, 2, 3"
+            value={formData.table_number}
+            onChange={(e) => setFormData({ ...formData, table_number: e.target.value })}
+            min="1"
           />
         </div>
+
+        <Input
+          label="College Name"
+          placeholder="e.g., IIT Bombay"
+          value={formData.college_name}
+          onChange={(e) => setFormData({ ...formData, college_name: e.target.value })}
+        />
 
         <div className="grid grid-cols-2 gap-4">
           <Select

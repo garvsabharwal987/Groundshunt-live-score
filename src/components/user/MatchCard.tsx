@@ -135,12 +135,17 @@ export function MatchCard({ fixture, compact = false }: MatchCardProps) {
           </div>
         )}
 
-        {/* Venue, Pool, and College */}
-        {!compact && (fixture.venue || fixture.pool || fixture.college_name) && (
+        {/* Venue, Pool, Table, and College */}
+        {!compact && (fixture.venue || fixture.pool || fixture.table_number || fixture.college_name) && (
           <div className="mt-3 pt-3 border-t border-gray-100 dark:border-slate-700 space-y-1">
             {fixture.venue && (
               <p className="text-xs text-gray-500 dark:text-slate-400">
                 📍 {fixture.venue.name}
+              </p>
+            )}
+            {fixture.table_number && (
+              <p className="text-xs text-gray-500 dark:text-slate-400">
+                🏓 Table {fixture.table_number}
               </p>
             )}
             {fixture.pool && (
