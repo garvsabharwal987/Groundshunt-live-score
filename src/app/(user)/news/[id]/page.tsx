@@ -16,7 +16,7 @@ async function getNewsById(id: string) {
     .from('news_of_the_day')
     .select('*')
     .eq('id', id)
-    .eq('is_featured', true)
+   
     .single();
 
   return data as NewsOfTheDay | null;

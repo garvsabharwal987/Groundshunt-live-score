@@ -9,7 +9,7 @@ async function getNews() {
   const { data: news } = await supabase
     .from('news_of_the_day')
     .select('*')
-    .eq('is_featured', true)
+   
     .order('published_at', { ascending: false })
     .order('created_at', { ascending: false });
 
