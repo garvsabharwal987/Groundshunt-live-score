@@ -72,7 +72,7 @@ sportikon/
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Supabase account
+- Supabase account (only for Supabase Cloud mode)
 
 ### 1. Clone Repository
 
@@ -89,31 +89,52 @@ npm install
 
 ### 3. Configure Environment
 
+Create a `.env.local` file:
+
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local` with your Supabase credentials:
+#### Option A: Local SQLite Mode (Recommended for offline testing)
+Configure `.env.local` to enable SQLite:
+```env
+NEXT_PUBLIC_USE_LOCAL_SQLITE=true
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=mock-anon-key
+SUPABASE_SERVICE_ROLE_KEY=mock-service-role-key
+```
 
+#### Option B: Supabase Mode (Cloud database)
+Configure `.env.local` with your Supabase credentials:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
 
-### 4. Set Up Database
+### 4. Database Setup
 
-1. Go to Supabase SQL Editor
-2. Run `database/schema.sql`
-3. Enable Realtime for: `fixtures`, `live_scores`, `news_of_the_day`
+#### For Local SQLite Mode
+No manual setup is required! The application will automatically create and seed a local database file (`local.db`) with sample sports, teams, fixtures, live scores, and news on your first run.
 
-### 5. Create Admin User
+#### For Supabase Mode
+1. Go to the Supabase SQL Editor.
+2. Run the `database/schema.sql` script to create all tables, types, and policies.
+3. Enable Realtime for the following tables: `fixtures`, `live_scores`, `news_of_the_day`.
 
-1. Create user in Supabase Dashboard (Authentication → Users)
-2. Run in SQL Editor:
-```sql
-UPDATE users SET role = 'super_admin' WHERE email = 'your-email@domain.com';
-```
+### 5. Admin Authentication & Login
+
+#### For Local SQLite Mode
+You can log in to the admin portal at `/arena-admin` using these pre-seeded credentials:
+* **Email**: `adminshunt@gmail.com`
+* **Password**: `bennett.admin@groundshunt1919`
+
+#### For Supabase Mode
+1. Create a user via the Supabase Dashboard under Authentication → Users.
+2. In the Supabase SQL Editor, run this query to elevate the user role to super_admin:
+   ```sql
+   UPDATE users SET role = 'super_admin' WHERE email = 'your-email@domain.com';
+   ```
 
 ### 6. Run Development Server
 

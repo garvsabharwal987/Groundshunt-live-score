@@ -40,6 +40,7 @@ function initializeDatabase() {
       logo_url TEXT,
       primary_color TEXT,
       secondary_color TEXT,
+      is_active INTEGER DEFAULT 1,
       created_at TEXT DEFAULT (datetime('now'))
     );
 
@@ -49,6 +50,7 @@ function initializeDatabase() {
       name TEXT NOT NULL,
       location TEXT,
       capacity INTEGER,
+      is_active INTEGER DEFAULT 1,
       created_at TEXT DEFAULT (datetime('now'))
     );
 
@@ -66,6 +68,7 @@ function initializeDatabase() {
       match_number INTEGER,
       winner_id TEXT REFERENCES teams(id) ON DELETE SET NULL,
       is_draw INTEGER DEFAULT 0,
+      enable_live_scoring INTEGER DEFAULT 1,
       created_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now'))
     );
@@ -122,6 +125,7 @@ function initializeDatabase() {
       email TEXT UNIQUE NOT NULL,
       full_name TEXT,
       role TEXT DEFAULT 'viewer' CHECK (role IN ('super_admin', 'admin', 'moderator', 'viewer')),
+      is_active INTEGER DEFAULT 1,
       created_at TEXT DEFAULT (datetime('now'))
     );
 
@@ -148,6 +152,30 @@ function initializeDatabase() {
   // Run migrations - add missing columns
   try {
     database.exec(`ALTER TABLE fixtures ADD COLUMN match_number INTEGER;`);
+  } catch {
+    // Column already exists, ignore
+  }
+
+  try {
+    database.exec(`ALTER TABLE fixtures ADD COLUMN enable_live_scoring INTEGER DEFAULT 1;`);
+  } catch {
+    // Column already exists, ignore
+  }
+
+  try {
+    database.exec(`ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 1;`);
+  } catch {
+    // Column already exists, ignore
+  }
+
+  try {
+    database.exec(`ALTER TABLE teams ADD COLUMN is_active INTEGER DEFAULT 1;`);
+  } catch {
+    // Column already exists, ignore
+  }
+
+  try {
+    database.exec(`ALTER TABLE venues ADD COLUMN is_active INTEGER DEFAULT 1;`);
   } catch {
     // Column already exists, ignore
   }
